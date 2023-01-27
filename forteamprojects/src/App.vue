@@ -45,7 +45,7 @@ body {
 }
 .main {
   background-color: #e8f3e1;
-  max-width: 780px;
+  max-width: 750px;
   height: 100%;
   font-family: mainFont;
   margin: auto;
