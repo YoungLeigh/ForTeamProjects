@@ -3,12 +3,6 @@
     <div class="team-info-content">
       <div class="team-info-title">
         <p class="title">Team Info</p>
-        <button type="button" id="main-btn" class="btn1 btn--full btn--outline">
-          Edit
-        </button>
-        <button type="button" id="main-btn" class="btn1 btn--full btn--outline">
-          Save
-        </button>
       </div>
 
       <table class="team-info-table">

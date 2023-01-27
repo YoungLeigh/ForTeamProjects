@@ -14,10 +14,12 @@ import {
   faUserSecret,
   faPenToSquare,
   faTrash,
+  faUser,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faUserSecret, faPenToSquare, faTrash);
+library.add(faUserSecret, faPenToSquare, faTrash, faUser, faAddressBook);
 
 createApp(App)
   .use(router)
