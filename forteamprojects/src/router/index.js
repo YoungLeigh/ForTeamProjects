@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.js";
 const routes = [];
 
 const router = createRouter({
