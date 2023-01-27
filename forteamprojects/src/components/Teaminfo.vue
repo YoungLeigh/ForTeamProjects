@@ -3,56 +3,79 @@
     <div class="team-info-content">
       <div class="team-info-title">
         <p class="title">Team Info</p>
-        <button type="button" id="main-btn" class="btn btn--full btn--outline">
+        <button type="button" id="main-btn" class="btn1 btn--full btn--outline">
           Edit
         </button>
-        <button type="button" id="main-btn" class="btn btn--full btn--outline">
+        <button type="button" id="main-btn" class="btn1 btn--full btn--outline">
           Save
         </button>
       </div>
 
       <table class="team-info-table">
-        <tr>
-          <th>Name</th>
+        <thead>
+          <th class="table-name">Name</th>
 
-          <th>Email</th>
+          <th class="table-email">Email</th>
 
-          <th>Contact</th>
+          <th class="table-contact">Contact</th>
 
-          <th></th>
-        </tr>
+          <th class="table-actions">Actions</th>
+        </thead>
+        <tbody v-for="info in teaminfo" :key="teaminfo.id">
+          <tr>
+            <td>{{ info.name }}</td>
 
-        <tr>
-          <td>1368</td>
+            <td>{{ info.email }}</td>
 
-          <td>18 Nov 1962</td>
+            <td>{{ info.contacts }}</td>
 
-          <td>5000$</td>
+            <td class="td-btn">
+              <button type="button" class="team-close-btn btn--full2 edit-btn">
+                <font-awesome-icon
+                  icon="fa-solid fa-pen-to-square"
+                  class="team-icon"
+                />
+              </button>
 
-          <td class="td-btn">
-            <button type="button" class="team-close-btn btn--full2 edit-btn">
-              <font-awesome-icon
-                icon="fa-solid fa-pen-to-square"
-                class="team-icon"
-              />
-            </button>
-
-            <button type="button" class="team-close-btn btn--full2">
-              <font-awesome-icon icon="fa-solid fa-trash" class="team-icon1" />
-            </button>
-          </td>
-        </tr>
+              <button type="button" class="team-close-btn btn--full2">
+                <font-awesome-icon
+                  icon="fa-solid fa-trash"
+                  class="team-icon1"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </table>
-
-      <button class="team-add-btn btn--full1 btn--outline1" type="button">
-        +Add Member
-      </button>
+      <div>
+        <TeamAddModal :visible="false" variant="success"></TeamAddModal>
+      </div>
     </div>
+    <div></div>
   </section>
 </template>
 
 <script>
-export default {};
+import TeamAddModal from "./TeamAddModal.vue";
+
+export default {
+  name: "TeamInfo",
+  props: {},
+  components: {
+    TeamAddModal,
+  },
+  data() {
+    return {
+      teaminfo: [],
+    };
+  },
+  mounted() {
+    fetch(" http://localhost:3000/teaminfo")
+      .then((res) => res.json())
+      .then((data) => (this.teaminfo = data))
+      .catch((err) => console.log(err.message));
+  },
+};
 </script>
 
 <style>
@@ -62,6 +85,8 @@ export default {};
   border-radius: 35px;
   color: #424954;
   display: inline-block;
+  width: 750px;
+  max-width: 750px;
 }
 .team-info-content {
   display: flex;
@@ -109,7 +134,7 @@ export default {};
   color: rgb(249, 112, 112);
 }
 .team-add-btn {
-  width: 710px;
+  width: 100%;
   height: 30px;
   border-style: dotted;
   border-width: 1.5px;
@@ -136,6 +161,7 @@ table {
   border-spacing: 0;
   border-radius: 12px;
   overflow: hidden;
+  width: 100%;
 }
 td {
   padding: 0px 15px;
@@ -177,5 +203,17 @@ td {
 }
 .team-icon1 {
   width: 17px;
+}
+.table-name {
+  width: 25%;
+}
+.table-email {
+  width: 30%;
+}
+.table-contact {
+  width: 25%;
+}
+.table-actions {
+  width: 10%;
 }
 </style>

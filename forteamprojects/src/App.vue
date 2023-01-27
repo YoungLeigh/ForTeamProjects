@@ -2,17 +2,17 @@
   <router-view />
   <div class="main">
     <Header />
-    <Teaminfo />
+    <TeamInfo />
   </div>
 </template>
 
 <script>
-import Teaminfo from "./components/Teaminfo.vue";
+import TeamInfo from "./components/TeamInfo.vue";
 import Header from "./components/Header.vue";
 export default {
   name: "App",
   components: {
-    Teaminfo,
+    TeamInfo,
     Header,
   },
 };

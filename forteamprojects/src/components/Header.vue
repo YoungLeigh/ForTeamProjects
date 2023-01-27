@@ -2,8 +2,10 @@
   <div class="header">
     <a href="#" class="logo">Team Project</a>
     <div class="header-btn-list">
-      <button class="btn btn--full btn--outline" type="button">Settings</button>
-      <button class="btn btn--full btn--outline" type="button">Login</button>
+      <button class="btn1 btn--full btn--outline" type="button">
+        Settings
+      </button>
+      <button class="btn1 btn--full btn--outline" type="button">Login</button>
     </div>
   </div>
 </template>
@@ -37,11 +39,11 @@ export default {};
   flex-direction: row;
   gap: 5px;
 }
-.btn {
+.btn1 {
   background-color: #00cc99;
   border: none;
 }
-.btn,
+.btn1,
 .btn:link,
 .btn:visited {
   width: 75px;
@@ -58,9 +60,7 @@ export default {};
   font-family: mainFont;
   color: white;
 }
-.btn :first-child {
-  margin-right: 10px;
-}
+
 .btn--full:link,
 .btn--full:visited {
   background-color: rgb(255, 255, 255);
