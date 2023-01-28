@@ -111,7 +111,7 @@ export default {
           body: JSON.stringify(userData),
         })
           .then(() => {
-            this.$router.push("/");
+            this.$emit("addUser");
           })
           .catch((err) => console.log(err));
         this.memberName = "";

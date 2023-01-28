@@ -5,7 +5,7 @@
         <p class="title">Team Info</p>
       </div>
 
-      <table class="team-info-table">
+      <table>
         <thead>
           <th class="table-name">Name</th>
 
@@ -15,7 +15,7 @@
 
           <th class="table-actions">Actions</th>
         </thead>
-        <tbody v-for="info in teaminfo" :key="teaminfo.id">
+        <tbody v-for="info in teaminfo" :key="info.id" :id="info.id">
           <tr>
             <td>{{ info.name }}</td>
 
@@ -42,7 +42,11 @@
         </tbody>
       </table>
       <div>
-        <TeamAddModal :visible="false" variant="success"></TeamAddModal>
+        <TeamAddModal
+          :visible="false"
+          variant="success"
+          @addUser="saveData()"
+        ></TeamAddModal>
       </div>
     </div>
     <div></div>
@@ -62,6 +66,14 @@ export default {
     return {
       teaminfo: [],
     };
+  },
+  methods: {
+    saveData() {
+      fetch(" http://localhost:3000/teaminfo")
+        .then((res) => res.json())
+        .then((data) => (this.teaminfo = data))
+        .catch((err) => console.log(err.message));
+    },
   },
   mounted() {
     fetch(" http://localhost:3000/teaminfo")
@@ -157,6 +169,7 @@ table {
   overflow: hidden;
   width: 100%;
 }
+
 td {
   padding: 0px 15px;
   text-align: left;
@@ -170,7 +183,6 @@ th {
   color: #424954;
   text-transform: uppercase;
   font-family: mainFont;
-  font-size: 13px;
 }
 tr {
   width: 100%;
@@ -202,10 +214,10 @@ td {
   width: 25%;
 }
 .table-email {
-  width: 30%;
+  width: 35%;
 }
 .table-contact {
-  width: 25%;
+  width: 20%;
 }
 .table-actions {
   width: 10%;
