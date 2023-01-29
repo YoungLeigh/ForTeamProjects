@@ -31,7 +31,11 @@
                 @editUser="saveData()"
               ></TeamEditModal>
 
-              <button type="button" class="team-close-btn btn--full2">
+              <button
+                @click="deleteData(id)"
+                type="button"
+                class="team-close-btn btn--full2"
+              >
                 <font-awesome-icon
                   icon="fa-solid fa-trash"
                   class="team-icon1"
@@ -67,12 +71,21 @@ export default {
   data() {
     return {
       teaminfo: [],
+      uri: "http://localhost:3000/teaminfo/",
     };
   },
   methods: {
     saveData() {
       fetch("http://localhost:3000/teaminfo")
         .then((res) => res.json())
+        .then((data) => (this.teaminfo = data))
+        .catch((err) => console.log(err.message));
+    },
+    deleteData(id) {
+      fetch(this.uri + id, {
+        method: "DELETE",
+      })
+        .then((res) => res.json()) // or res.json()
         .then((data) => (this.teaminfo = data))
         .catch((err) => console.log(err.message));
     },
