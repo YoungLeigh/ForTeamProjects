@@ -24,12 +24,12 @@
             <td>{{ info.contacts }}</td>
 
             <td class="td-btn">
-              <button type="button" class="team-close-btn btn--full2 edit-btn">
-                <font-awesome-icon
-                  icon="fa-solid fa-pen-to-square"
-                  class="team-icon"
-                />
-              </button>
+              <TeamEditModal
+                :info="info"
+                :visible="false"
+                variant="success"
+                @editUser="saveData()"
+              ></TeamEditModal>
 
               <button type="button" class="team-close-btn btn--full2">
                 <font-awesome-icon
@@ -55,12 +55,14 @@
 
 <script>
 import TeamAddModal from "./TeamAddModal.vue";
+import TeamEditModal from "./TeamEditModal.vue";
 
 export default {
   name: "TeamInfo",
   props: {},
   components: {
     TeamAddModal,
+    TeamEditModal,
   },
   data() {
     return {
@@ -69,7 +71,7 @@ export default {
   },
   methods: {
     saveData() {
-      fetch(" http://localhost:3000/teaminfo")
+      fetch("http://localhost:3000/teaminfo")
         .then((res) => res.json())
         .then((data) => (this.teaminfo = data))
         .catch((err) => console.log(err.message));
