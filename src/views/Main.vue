@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TeamInfo from "../components/TeamInfo.vue";
+import TeamInfo from "./TeamInfo/TeamInfo.vue";
 import Header from "../components/Header.vue";
 export default {
   name: "Main",
