@@ -5,13 +5,32 @@
       <button class="btn1 btn--full btn--outline" type="button">
         Settings
       </button>
-      <button class="btn1 btn--full btn--outline" type="button">Login</button>
+      <button
+        @click="handleLogin"
+        class="btn1 btn--full btn--outline"
+        type="button"
+      >
+        Login
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { useRouter } from "vue-router";
+
+export default {
+  setup() {
+    const router = useRouter();
+    function handleLogin() {
+      this.router.push("login");
+    }
+    return { handleLogin };
+  },
+  render() {
+    return h("button", { onClick: this.handleLogin }, "Go to New Route");
+  },
+};
 </script>
 
 <style>

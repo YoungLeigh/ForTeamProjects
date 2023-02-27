@@ -33,8 +33,8 @@
       >
     </div>
     <div class="signup-btns" style="display: flex; flex-direction: row">
-      <p style="margin: 10px 0 0 0; color: #424954">Haven't sign up yet?</p>
-      <Router-Link class="signup-btn" to="/signup">Sign Up Now</Router-Link>
+      <p style="margin: 10px 0 0 0; color: #424954">Haven't signed up yet?</p>
+      <Router-Link class="signup-btn" to="/signup">Create Account</Router-Link>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background-color: #e8f3e1;
   font-family: mainFont;
 }
@@ -95,7 +95,7 @@ export default {
   border-style: none;
   color: #818181;
   font-family: mainFont, korFont;
-  font-size: 20px;
+  font-size: 19px;
 }
 .login-input::placeholder {
   color: #b9b9b9;
@@ -145,5 +145,6 @@ export default {
 .signup-btn {
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 20px;
 }
 </style>
