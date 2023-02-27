@@ -1,7 +1,9 @@
 <template>
   <div class="main">
-    <Header />
-    <TeamInfo />
+    <div class="main-content">
+      <Header />
+      <TeamInfo />
+    </div>
   </div>
 </template>
 
@@ -40,9 +42,11 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #e8f3e1;
 }
 .main {
+  background-color: #e8f3e1;
+}
+.main-content {
   background-color: #e8f3e1;
   max-width: 750px;
   height: 100%;
