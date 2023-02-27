@@ -1,5 +1,5 @@
 <template>
-  <div class="signup">signup</div>
+  <div class="reset-password">ResetPassword</div>
 </template>
 <script></script>
 <style></style>
