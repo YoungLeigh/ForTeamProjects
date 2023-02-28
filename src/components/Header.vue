@@ -23,7 +23,7 @@ export default {
   setup() {
     const router = useRouter();
     function handleLogin() {
-      this.router.push("login");
+      router.push("login");
     }
     return { handleLogin };
   },
