@@ -21,18 +21,18 @@
           required
           v-model="password"
         />
-        <button class="login-btn">Login with Email</button>
+        <button class="login-btn">Sign in with Email</button>
       </form>
       <p style="color: #959595; font-size: 20px; margin-bottom: 7px">or</p>
       <button class="login-btn-google">
-        <img class="google-icon" src="@/assets/images/google.png" />Login with
-        Google
+        <img class="google-icon" src="@/assets/images/google.png" />Continue
+        with Google
       </button>
       <Router-Link class="resetpw-btn" to="/reset-password"
         >Forgot Password?</Router-Link
       >
     </div>
-    <div class="signup-btns" style="display: flex; flex-direction: row">
+    <div class="signup-btns">
       <p style="margin: 10px 0 0 0; color: #424954">Haven't signed up yet?</p>
       <Router-Link class="signup-btn" to="/signup">Create Account</Router-Link>
     </div>
@@ -108,6 +108,7 @@ export default {
   font-family: mainFont, korFont;
   font-size: 18px;
   color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .login-btn-google {
   width: 340px;
@@ -146,5 +147,9 @@ export default {
   margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 20px;
+}
+.signup-btns {
+  display: flex;
+  flex-direction: row;
 }
 </style>

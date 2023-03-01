@@ -14,6 +14,13 @@
           placeholder="example@gmail.com"
           v-model="email"
         />
+        <p class="input-sub">PASSWORD</p>
+        <input
+          class="login-input"
+          type="password"
+          required
+          v-model="password"
+        />
         <button class="login-btn" style="margin-bottom: 10px">
           Sign up with Email
         </button>
@@ -24,19 +31,32 @@
         Google
       </button>
     </div>
-    <div class="signup-btns" style="display: flex; flex-direction: row">
+    <div class="signup-btns">
       <p style="margin: 10px 0 0 0; color: #424954">Already have an account?</p>
       <Router-Link class="signup-btn" to="/login">Login</Router-Link>
     </div>
   </div>
 </template>
-<script></script>
+<script>
+import { ref } from "vue";
+export default {
+  setup() {
+    const email = ref("");
+    const password = ref("");
+
+    const handleSubmit = () => {
+      console.log(email.value);
+    };
+    return { email, password, handleSubmit };
+  },
+};
+</script>
 <style>
 .signup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background-color: #e8f3e1;
   font-family: mainFont;
 }
