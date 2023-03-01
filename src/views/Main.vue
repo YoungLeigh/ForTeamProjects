@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="main-content">
-      <Header />
-      <TeamInfo />
+      <Header></Header>
+      <TeamInfo></TeamInfo>
     </div>
   </div>
 </template>

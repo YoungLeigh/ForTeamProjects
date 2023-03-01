@@ -1,8 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.js";
+import store from "./store/index.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -16,6 +15,7 @@ import {
 library.add(faUserSecret, faPenToSquare, faTrash, faUser, faAddressBook);
 
 createApp(App)
+  .use(store)
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

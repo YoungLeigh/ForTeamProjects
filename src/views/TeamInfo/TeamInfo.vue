@@ -15,7 +15,11 @@
 
           <th class="table-actions">Actions</th>
         </thead>
-        <tbody v-for="info in teaminfo" :key="info.id" :id="info.id">
+        <tbody
+          v-for="info in $store.state.teaminfo"
+          :key="info.id"
+          :id="info.id"
+        >
           <tr>
             <td>{{ info.name }}</td>
 
@@ -70,31 +74,30 @@ export default {
   },
   data() {
     return {
-      teaminfo: [],
       uri: "http://localhost:3000/teaminfo/",
     };
   },
   methods: {
-    saveData() {
-      fetch("http://localhost:3000/teaminfo")
-        .then((res) => res.json())
-        .then((data) => (this.teaminfo = data))
-        .catch((err) => console.log(err.message));
-    },
-    deleteData(id) {
-      fetch(this.uri + id, {
-        method: "DELETE",
-      })
-        .then((res) => res.json()) // or res.json()
-        .then((data) => (this.teaminfo = data))
-        .catch((err) => console.log(err.message));
-    },
+    // saveData() {
+    //   fetch("http://localhost:3000/teaminfo")
+    //     .then((res) => res.json())
+    //     .then((data) => (this.teaminfo = data))
+    //     .catch((err) => console.log(err.message));
+    // },
+    // deleteData(id) {
+    //   fetch(this.uri + id, {
+    //     method: "DELETE",
+    //   })
+    //     .then((res) => res.json()) // or res.json()
+    //     .then((data) => (this.teaminfo = data))
+    //     .catch((err) => console.log(err.message));
+    // },
   },
   mounted() {
-    fetch(" http://localhost:3000/teaminfo")
-      .then((res) => res.json())
-      .then((data) => (this.teaminfo = data))
-      .catch((err) => console.log(err.message));
+    // fetch(" http://localhost:3000/teaminfo")
+    //   .then((res) => res.json())
+    //   .then((data) => (this.teaminfo = data))
+    //   .catch((err) => console.log(err.message));
   },
 };
 </script>
