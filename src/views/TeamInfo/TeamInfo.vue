@@ -21,6 +21,8 @@
           :id="info.id"
         >
           <tr>
+            <td style="display: none">{{ info.id }}</td>
+
             <td>{{ info.name }}</td>
 
             <td>{{ info.email }}</td>
@@ -104,7 +106,7 @@ export default {
 
 <style>
 .team-info {
-  background-color: #a6deae;
+  background-color: #fff;
   margin-top: 15px;
   border-radius: 35px;
   color: #424954;
@@ -189,26 +191,24 @@ table {
 }
 
 td {
-  padding: 0px 15px;
+  padding: 0px 0px;
   text-align: left;
+  background-color: #cfcfcf;
+  border-radius: 10px;
 }
 th {
-  padding: 10px 15px;
+  padding: 10px 0px;
   text-align: left;
-}
-th {
-  background-color: #f3f3f3;
+  background-color: none;
   color: #424954;
   text-transform: uppercase;
   font-family: mainFont;
 }
 tr {
   width: 100%;
-  background-color: #fafafa;
 }
 td {
-  font-size: 13px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
 }
 .td-btn {
   display: flex;
@@ -230,6 +230,7 @@ td {
 }
 .table-name {
   width: 25%;
+  background-color: none;
 }
 .table-email {
   width: 35%;

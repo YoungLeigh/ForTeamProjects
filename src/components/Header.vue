@@ -59,8 +59,9 @@ export default {
   gap: 5px;
 }
 .btn1 {
-  background-color: #00cc99;
+  background-color: #424954;
   border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .btn1,
 .btn:link,
@@ -77,7 +78,7 @@ export default {
   justify-content: center;
   padding: 11px;
   font-family: mainFont;
-  color: white;
+  color: #fff;
 }
 
 .btn--full:link,
@@ -93,7 +94,7 @@ export default {
 }
 .btn--outline:hover,
 .btn--outline:active {
-  background-color: #deddddc2;
-  box-shadow: inset 0 0 0 1.5px #fff;
+  background-color: #00cc99;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 </style>
