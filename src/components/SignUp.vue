@@ -1,8 +1,6 @@
 <template>
   <div class="signup">
-    <div class="reset-header">
-      <h1>ForTeamProjects</h1>
-    </div>
+    <h1 class="login-header">ForTeamProjects</h1>
     <div class="reset-container">
       <p class="reset-subheader">Sign Up Now</p>
       <form @submit.prevent="handleSignUp" class="login-form">
@@ -21,11 +19,9 @@
           required
           v-model="password"
         />
-        <button class="login-btn" style="margin-bottom: 10px">
-          Sign up with Email
-        </button>
+        <button class="login-btn">Sign up with Email</button>
       </form>
-      <p style="color: #959595; font-size: 20px; margin-bottom: 7px">or</p>
+      <p class="login-div-text">or</p>
       <button class="login-btn-google">
         <img class="google-icon" src="@/assets/images/google.png" />Sign up with
         Google

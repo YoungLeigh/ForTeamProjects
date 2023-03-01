@@ -1,8 +1,6 @@
 <template>
   <div class="login">
-    <div class="login-header">
-      <h1>ForTeamProjects</h1>
-    </div>
+    <h1 class="login-header">ForTeamProjects</h1>
     <div class="form-container">
       <p class="login-subheader">Sign In</p>
       <form @submit.prevent="handleSubmit" class="login-form">
@@ -23,7 +21,7 @@
         />
         <button class="login-btn">Sign in with Email</button>
       </form>
-      <p style="color: #959595; font-size: 20px; margin-bottom: 7px">or</p>
+      <p class="login-div-text">or</p>
       <button class="login-btn-google">
         <img class="google-icon" src="@/assets/images/google.png" />Continue
         with Google
@@ -33,7 +31,7 @@
       >
     </div>
     <div class="signup-btns">
-      <p style="margin: 10px 0 0 0; color: #424954">Haven't signed up yet?</p>
+      <p class="login-ask-text">Haven't signed up yet?</p>
       <Router-Link class="signup-btn" to="/signup">Create Account</Router-Link>
     </div>
   </div>
@@ -65,13 +63,11 @@ export default {
   font-family: mainFont;
 }
 .login-header {
-  margin-top: 50px;
   font-family: titleFont;
-  font-size: 35px;
+  font-size: 45px;
   text-decoration: none;
   color: #424954;
   white-space: nowrap;
-  margin-bottom: 20px;
 }
 .login-subheader {
   margin-top: 20px;
@@ -82,8 +78,7 @@ export default {
 .login-form {
   display: flex;
   flex-direction: column;
-  margin: 15px 30px 15px 30px;
-  margin-bottom: 5px;
+  margin: 15px 30px 0px 30px;
 }
 .login-input {
   padding-left: 5px;
@@ -99,6 +94,12 @@ export default {
 }
 .login-input::placeholder {
   color: #b9b9b9;
+}
+.login-div-text {
+  color: #959595;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .login-btn {
   border-style: none;
@@ -151,5 +152,9 @@ export default {
 .signup-btns {
   display: flex;
   flex-direction: row;
+}
+.login-ask-text {
+  margin: 10px 0 0 0;
+  color: #424954;
 }
 </style>
