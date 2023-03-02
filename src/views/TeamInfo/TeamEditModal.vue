@@ -1,9 +1,5 @@
 <template>
-  <button
-    type="button"
-    @click="showModal()"
-    class="team-close-btn btn--full2 edit-btn"
-  >
+  <button type="button" class="team-close-btn btn--full2 edit-btn">
     <font-awesome-icon icon="fa-solid fa-pen-to-square" class="team-icon" />
   </button>
   <form
@@ -80,55 +76,50 @@
 <script>
 export default {
   name: "TeamEditModal",
-  props: {
-    visible: Boolean,
-    variant: String,
-  },
   data() {
     return {
       openClose: this.visible,
       memberName: "",
       memberEmail: "",
       memberContacts: "",
-      uri: "http://localhost:8080/teaminfo/" + this.id,
     };
   },
-  mounted() {
-    fetch(this.uri)
-      .then((res) => res.json())
-      .then((data) => {
-        this.memberName = data.memberName;
-        this.memberEmail = data.memberEmail;
-        this.memberContacts = data.memberContacts;
-      });
-  },
-  methods: {
-    showModal() {
-      this.openClose = !this.openClose;
-    },
-    handleEdit() {
-      this.openClose = !this.openClose;
-      fetch("http://localhost:3000/teaminfo", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          memberName: this.memberName,
-          memberEmail: this.memberEmail,
-          memberContacts: this.memberContacts,
-        }),
-      })
-        .then(() => {
-          this.$emit("editUser");
-        })
-        .catch((err) => console.log(err));
-    },
-  },
-  watch: {
-    visible: function (newVal, oldVal) {
-      this.openClose = newVal;
-      console.log("new" + newVal + "==" + oldVal);
-    },
-  },
+  // mounted() {
+  //   fetch(this.uri)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       this.memberName = data.memberName;
+  //       this.memberEmail = data.memberEmail;
+  //       this.memberContacts = data.memberContacts;
+  //     });
+  // },
+  // methods: {
+  //   showModal() {
+  //     this.openClose = !this.openClose;
+  //   },
+  //   handleEdit() {
+  //     this.openClose = !this.openClose;
+  //     fetch("http://localhost:3000/teaminfo", {
+  //       method: "PATCH",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         memberName: this.memberName,
+  //         memberEmail: this.memberEmail,
+  //         memberContacts: this.memberContacts,
+  //       }),
+  //     })
+  //       .then(() => {
+  //         this.$emit("editUser");
+  //       })
+  //       .catch((err) => console.log(err));
+  //   },
+  // },
+  // watch: {
+  //   visible: function (newVal, oldVal) {
+  //     this.openClose = newVal;
+  //     console.log("new" + newVal + "==" + oldVal);
+  //   },
+  // },
 };
 </script>
 <style></style>

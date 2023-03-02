@@ -84,8 +84,6 @@ export default {
 .btn--full:link,
 .btn--full:visited {
   background-color: rgb(255, 255, 255);
-  color: black;
-  background-color: #00cc99;
   color: #424954;
 }
 .btn--full:hover,

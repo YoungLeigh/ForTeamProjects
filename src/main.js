@@ -10,9 +10,19 @@ import {
   faTrash,
   faUser,
   faAddressBook,
+  faXmark,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 /* add icons to the library */
-library.add(faUserSecret, faPenToSquare, faTrash, faUser, faAddressBook);
+library.add(
+  faUserSecret,
+  faPenToSquare,
+  faTrash,
+  faUser,
+  faAddressBook,
+  faXmark,
+  faCheck
+);
 
 createApp(App)
   .use(store)

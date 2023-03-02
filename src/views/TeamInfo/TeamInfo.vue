@@ -5,15 +5,15 @@
         <p class="title">Team Info</p>
       </div>
 
-      <table>
+      <table class="teaminfo-table">
         <thead>
-          <th class="table-name">Name</th>
+          <th class="table-name team-info-th">Name</th>
 
-          <th class="table-email">Email</th>
+          <th class="table-email team-info-th">Email</th>
 
-          <th class="table-contact">Contact</th>
+          <th class="table-contact team-info-th">Contact</th>
 
-          <th class="table-actions">Actions</th>
+          <th class="table-actions team-info-th"></th>
         </thead>
         <tbody
           v-for="info in $store.state.teaminfo"
@@ -23,25 +23,16 @@
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
-            <td class="table-name">{{ info.name }}</td>
+            <td class="table-name team-info-td">{{ info.name }}</td>
 
-            <td class="table-email">{{ info.email }}</td>
+            <td class="table-email team-info-td">{{ info.email }}</td>
 
-            <td class="table-actions">{{ info.contacts }}</td>
+            <td class="table-contact team-info-td">{{ info.contacts }}</td>
 
-            <td class="td-btn">
-              <TeamEditModal
-                :info="info"
-                :visible="false"
-                variant="success"
-                @editUser="saveData()"
-              ></TeamEditModal>
+            <td class="td-btn team-info-td">
+              <TeamEditModal></TeamEditModal>
 
-              <button
-                @click="deleteData(id)"
-                type="button"
-                class="team-close-btn btn--full2"
-              >
+              <button type="button" class="team-close-btn">
                 <font-awesome-icon
                   icon="fa-solid fa-trash"
                   class="team-icon1"
@@ -54,6 +45,7 @@
       <div>
         <TeamAddModal v-if="addModal"></TeamAddModal>
         <button
+          v-if="addTeambtn"
           @click="handleAddModal"
           class="team-add-btn btn--full1 btn--outline1"
           type="button"
@@ -69,6 +61,7 @@
 <script>
 import TeamAddModal from "./TeamAddModal.vue";
 import TeamEditModal from "./TeamEditModal.vue";
+import { ref } from "vue";
 
 export default {
   name: "TeamInfo",
@@ -78,11 +71,13 @@ export default {
     TeamEditModal,
   },
   setup() {
-    let addModal = true;
+    let addModal = ref(false);
+    let addTeambtn = ref(true);
     const handleAddModal = () => {
-      addModal = !addModal;
+      addModal.value = !addModal.value;
+      addTeambtn.value = !addTeambtn.value;
     };
-    return { addModal, handleAddModal };
+    return { addModal, addTeambtn, handleAddModal };
   },
   methods: {
     // saveData() {
@@ -161,12 +156,8 @@ export default {
   padding-left: 6px;
   cursor: pointer;
 }
-.btn--full2:hover,
-.btn--full2:active {
-  color: rgb(249, 112, 112);
-}
 .team-add-btn {
-  width: 100%;
+  width: 98%;
   height: 30px;
   border-style: dotted;
   border-width: 1.5px;
@@ -180,6 +171,7 @@ export default {
   margin-top: 5px;
   transition: all 0.3s;
   cursor: pointer;
+  margin-left: 4px;
 }
 .btn--outline1:hover,
 .btn--outline1:active {
@@ -187,8 +179,7 @@ export default {
   box-shadow: inset 0 0 0 1.5px #fff;
   border-style: none;
 }
-
-table {
+.teaminfo-table {
   border-collapse: collapse;
   border-spacing: 0;
   border-radius: 12px;
@@ -198,7 +189,7 @@ table {
   border-spacing: 6px 8px;
 }
 
-td {
+.team-info-td {
   text-align: left;
   background-color: #e2f0d9;
   padding-left: 5px;
@@ -206,7 +197,7 @@ td {
   height: 30px;
   border-radius: 7px;
 }
-th {
+.team-info-th {
   padding: 10px 0px;
   text-align: left;
   background-color: none;
@@ -214,12 +205,13 @@ th {
   text-transform: uppercase;
   font-family: mainFont;
 }
-tr {
+.team-info-tr {
   width: 100%;
 }
 .td-btn {
   display: flex;
   flex-direction: row;
+  background-color: #a6deae;
 }
 .edit-btn {
   background-color: transparent;
@@ -231,17 +223,26 @@ tr {
 }
 .team-icon {
   width: 20px;
+  color: #424954;
+}
+.team-icon:hover,
+.team-icon:active {
+  color: rgb(209, 248, 215);
+}
+.team-icon1:hover,
+.team-icon1:active {
+  color: rgb(249, 112, 112);
 }
 .team-icon1 {
   width: 17px;
+  color: #424954;
 }
 .table-name {
-  width: 25%;
-  background-color: none;
+  width: 28%;
 }
-.table-email {
+/* .table-email {
   width: 35%;
-}
+} */
 .table-contact {
   width: 20%;
 }
