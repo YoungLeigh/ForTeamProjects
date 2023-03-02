@@ -2,7 +2,7 @@
   <div class="teamAddModal">
     <table class="teamAddModal-table">
       <thead>
-        <th class="table-name team-add-th">+ Add a member</th>
+        <th class="table-name team-add-th">+ Add a Member</th>
 
         <th class="table-email team-add-th"></th>
 
@@ -127,5 +127,6 @@ export default {
 .team-add-th {
   text-align: left;
   color: rgb(225, 250, 229);
+  font-size: 20px;
 }
 </style>
