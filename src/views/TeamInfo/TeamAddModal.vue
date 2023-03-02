@@ -13,22 +13,40 @@
       <tbody>
         <tr class="team-info-tr">
           <td class="table-name team-info-td">
-            <input class="team-add-input" type="text" name="input1" />
+            <input
+              class="team-add-input"
+              type="text"
+              name="newName"
+              placeholder="Name"
+              v-model="memberName"
+            />
           </td>
 
           <td class="table-email team-info-td">
-            <input class="team-add-input" type="text" name="input1" />
+            <input
+              class="team-add-input"
+              type="email"
+              name="newEmail"
+              placeholder="example@gmail.com"
+              v-model="memberEmail"
+            />
           </td>
 
           <td class="table-contact team-info-td">
-            <input class="team-add-input" type="text" name="input1" />
+            <input
+              class="team-add-input"
+              type="text"
+              name="newContacts"
+              placeholder="000-000-000"
+              v-model="memberContacts"
+            />
           </td>
 
           <td class="td-btn team-info-td">
             <button class="team-close-btn1 btn--full2 edit-btn">
               <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />
             </button>
-            <button class="team-close-btn">
+            <button @click="closeAddBtn" class="team-close-btn">
               <font-awesome-icon class="team-icon4" icon="fa-solid fa-xmark" />
             </button>
           </td>
@@ -41,23 +59,17 @@
 <script>
 export default {
   name: "TeamAddModal",
-  props: {
-    visible: Boolean,
-    variant: String,
-  },
   data() {
     return {
-      openClose: this.visible,
       memberName: "",
       memberEmail: "",
       memberContacts: "",
     };
   },
   methods: {
-    showModal() {
-      this.openClose = !this.openClose;
+    closeAddBtn() {
+      this.$emit("closeAddBtn");
     },
-    handleSave() {},
   },
 };
 </script>
@@ -88,15 +100,15 @@ export default {
 }
 .team-icon3 {
   width: 22px;
-  color: #424954;
+  color: rgb(209, 248, 215);
 }
 .team-icon3:hover,
 .team-icon3:active {
-  color: rgb(209, 248, 215);
+  color: rgb(158, 252, 172);
 }
 .team-icon4 {
   width: 15px;
-  color: #424954;
+  color: rgb(209, 248, 215);
 }
 .team-icon4:hover,
 .team-icon4:active {

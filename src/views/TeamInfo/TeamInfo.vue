@@ -43,7 +43,10 @@
         </tbody>
       </table>
       <div>
-        <TeamAddModal v-if="addModal"></TeamAddModal>
+        <TeamAddModal
+          v-if="addModal"
+          @closeAddBtn="handleAddModal"
+        ></TeamAddModal>
         <button
           v-if="addTeambtn"
           @click="handleAddModal"
@@ -77,6 +80,7 @@ export default {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
+
     return { addModal, addTeambtn, handleAddModal };
   },
   methods: {
