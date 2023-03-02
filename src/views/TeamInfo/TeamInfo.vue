@@ -52,11 +52,14 @@
         </tbody>
       </table>
       <div>
-        <TeamAddModal
-          :visible="false"
-          variant="success"
-          @addUser="saveData()"
-        ></TeamAddModal>
+        <TeamAddModal v-if="addModal"></TeamAddModal>
+        <button
+          @click="handleAddModal"
+          class="team-add-btn btn--full1 btn--outline1"
+          type="button"
+        >
+          +Add Member
+        </button>
       </div>
     </div>
     <div></div>
@@ -74,10 +77,12 @@ export default {
     TeamAddModal,
     TeamEditModal,
   },
-  data() {
-    return {
-      uri: "http://localhost:3000/teaminfo/",
+  setup() {
+    let addModal = true;
+    const handleAddModal = () => {
+      addModal = !addModal;
     };
+    return { addModal, handleAddModal };
   },
   methods: {
     // saveData() {
@@ -208,7 +213,6 @@ th {
   color: #424954;
   text-transform: uppercase;
   font-family: mainFont;
-  padding-left: 5px;
 }
 tr {
   width: 100%;
