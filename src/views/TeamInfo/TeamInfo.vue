@@ -23,11 +23,11 @@
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
-            <td>{{ info.name }}</td>
+            <td class="table-name">{{ info.name }}</td>
 
-            <td>{{ info.email }}</td>
+            <td class="table-email">{{ info.email }}</td>
 
-            <td>{{ info.contacts }}</td>
+            <td class="table-actions">{{ info.contacts }}</td>
 
             <td class="td-btn">
               <TeamEditModal
@@ -106,7 +106,7 @@ export default {
 
 <style>
 .team-info {
-  background-color: #fff;
+  background-color: #a6deae;
   margin-top: 15px;
   border-radius: 35px;
   color: #424954;
@@ -121,7 +121,7 @@ export default {
     fit-content(150px)
     fit-content(250px)
     fit-content(350px) 1.5fr;
-  padding: 35px;
+  padding: 30px;
   padding-top: 25px;
 }
 .team-info-title {
@@ -136,6 +136,7 @@ export default {
 .title {
   font-size: 25px;
   margin: 0;
+  margin-left: 5px;
 }
 #main-btn {
   height: 30px;
@@ -188,13 +189,17 @@ table {
   border-radius: 12px;
   overflow: hidden;
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 6px 8px;
 }
 
 td {
-  padding: 0px 0px;
   text-align: left;
-  background-color: #cfcfcf;
-  border-radius: 10px;
+  background-color: #e2f0d9;
+  padding-left: 5px;
+  font-size: 15px;
+  height: 30px;
+  border-radius: 7px;
 }
 th {
   padding: 10px 0px;
@@ -203,12 +208,10 @@ th {
   color: #424954;
   text-transform: uppercase;
   font-family: mainFont;
+  padding-left: 5px;
 }
 tr {
   width: 100%;
-}
-td {
-  font-size: 15px;
 }
 .td-btn {
   display: flex;
@@ -220,7 +223,7 @@ td {
 }
 .edit-btn:hover,
 .edit-btn:active {
-  color: rgb(8, 207, 147);
+  color: #a6deae;
 }
 .team-icon {
   width: 20px;
