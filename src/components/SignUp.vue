@@ -60,6 +60,8 @@ export default {
         });
         router.push("/login");
       } catch (err) {
+        email.value = "";
+        password.value = "";
         error.value = err.message;
       }
     };
