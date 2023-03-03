@@ -1,7 +1,8 @@
 import { createStore } from "vuex";
 
-export default createStore({
+const store = createStore({
   state: {
+    user: null,
     teaminfo: [
       {
         id: 1,
@@ -23,8 +24,19 @@ export default createStore({
       },
     ],
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+      console.log("user state changed:", state.user);
+    },
+  },
+  actions: {
+    signup(context, payload) {
+      console.log("signup action");
+    },
+  },
   getters: {},
   modules: {},
 });
+
+export default store;

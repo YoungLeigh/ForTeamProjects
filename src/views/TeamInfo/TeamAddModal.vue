@@ -57,19 +57,22 @@
 </template>
 
 <script>
+import { ref } from "vue";
+// import { useStore } from "vuex";
+
 export default {
   name: "TeamAddModal",
-  data() {
-    return {
+  emit: ["closeAddBtn"],
+  setup(props, context) {
+    const newData = ref({
       memberName: "",
       memberEmail: "",
       memberContacts: "",
+    });
+    const closeAddBtn = () => {
+      context.emit("closeAddBtn");
     };
-  },
-  methods: {
-    closeAddBtn() {
-      this.$emit("closeAddBtn");
-    },
+    return { newData, closeAddBtn };
   },
 };
 </script>
