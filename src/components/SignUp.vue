@@ -3,6 +3,7 @@
     <h1 class="login-header">ForTeamProjects</h1>
     <div class="reset-container">
       <p class="reset-subheader">Sign Up Now</p>
+      <div class="login-error-msg" v-if="error">{{ error }}</div>
       <form @submit.prevent="handleSignUp" class="login-form">
         <p class="input-sub">EMAIL</p>
         <input
@@ -37,27 +38,32 @@
 </template>
 <script>
 import { ref } from "vue";
-import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const email = ref("");
     const password = ref("");
+    const error = ref(null);
 
     const store = useStore();
+    const router = useRouter();
 
-    const errorMessage = computed(() => store.state.auth.error);
-    console.log(store.state.user);
     store.commit("setUser", "yoshi");
 
-    const handleSubmit = () => {
-      store.dispatch("signUp", {
-        email: email.value,
-        password: password.value,
-      });
+    const handleSubmit = async () => {
+      try {
+        await store.dispatch("signUp", {
+          email: email.value,
+          password: password.value,
+        });
+        router.push("/login");
+      } catch (err) {
+        error.value = err.message;
+      }
     };
-    return { email, password, errorMessage, handleSubmit };
+    return { email, password, error, handleSubmit };
   },
 };
 </script>

@@ -3,6 +3,7 @@
     <h1 class="login-header">ForTeamProjects</h1>
     <div class="form-container">
       <p class="login-subheader">Sign In</p>
+      <div class="login-error-msg" v-if="error">{{ error }}</div>
       <form @submit.prevent="handleSubmit" class="login-form">
         <p class="input-sub">EMAIL</p>
         <input
@@ -19,7 +20,9 @@
           required
           v-model="password"
         />
-        <button class="login-btn">Sign in with Email</button>
+        <button @click="handleSubmit" class="login-btn">
+          Sign in with Email
+        </button>
       </form>
       <p class="login-div-text">or</p>
       <button class="login-btn-google">
@@ -38,18 +41,34 @@
 </template>
 <script>
 import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "login",
   setup() {
     const email = ref("");
     const password = ref("");
+    const error = ref(null);
 
-    const handleSubmit = () => {
-      console.log(email.value, password.value);
+    const store = useStore();
+    const router = useRouter();
+
+    const handleSubmit = async () => {
+      try {
+        await store.dispatch("login", {
+          email: email.value,
+          password: password.value,
+        });
+        router.push("/");
+      } catch (err) {
+        email.value = "";
+        password.value = "";
+        error.value = err.message;
+      }
     };
 
-    return { email, password, handleSubmit };
+    return { email, password, error, handleSubmit };
   },
 };
 </script>
@@ -162,5 +181,10 @@ export default {
 .login-ask-text {
   margin: 10px 0 0 0;
   color: #424954;
+}
+.login-error-msg {
+  color: #f0300e;
+  font-size: 15px;
+  margin-top: 10px;
 }
 </style>
