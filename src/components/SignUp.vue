@@ -19,7 +19,9 @@
           required
           v-model="password"
         />
-        <button class="login-btn">Sign up with Email</button>
+        <button @click="handleSubmit" type="submit" class="login-btn">
+          Sign up with Email
+        </button>
       </form>
       <p class="login-div-text">or</p>
       <button class="login-btn-google">
@@ -35,7 +37,9 @@
 </template>
 <script>
 import { ref } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
+
 export default {
   setup() {
     const email = ref("");
@@ -43,13 +47,17 @@ export default {
 
     const store = useStore();
 
+    const errorMessage = computed(() => store.state.auth.error);
+    console.log(store.state.user);
+    store.commit("setUser", "yoshi");
+
     const handleSubmit = () => {
-      store.dispatch("signup", {
+      store.dispatch("signUp", {
         email: email.value,
         password: password.value,
       });
     };
-    return { email, password, handleSubmit };
+    return { email, password, errorMessage, handleSubmit };
   },
 };
 </script>

@@ -110,6 +110,7 @@ export default {
   font-size: 18px;
   color: #fff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
 }
 .login-btn-google {
   width: 340px;
@@ -122,6 +123,11 @@ export default {
   color: rgb(88, 88, 88);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin-bottom: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 }
 .google-icon {
   height: 23px;

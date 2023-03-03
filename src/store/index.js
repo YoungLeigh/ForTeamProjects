@@ -1,42 +1,31 @@
 import { createStore } from "vuex";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config.js";
 
 const store = createStore({
   state: {
     user: null,
-    teaminfo: [
-      {
-        id: 1,
-        name: "Young Aude Leigh",
-        email: "yoonyoung.lee1218@gmail.com",
-        contacts: "010-8321-1287",
-      },
-      {
-        id: 2,
-        name: "Mark Wajelo",
-        email: "wjaleo@gmail.com",
-        contacts: "010-1121-1227",
-      },
-      {
-        id: 3,
-        name: "Graham",
-        email: "GrahamHancock@gmail.com",
-        contacts: "010-8021-2222",
-      },
-    ],
+    teaminfo: [],
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
       console.log("user state changed:", state.user);
     },
-  },
-  actions: {
-    signup(context, payload) {
-      console.log("signup action");
+    setError(state, error) {
+      state.error = error;
     },
   },
-  getters: {},
-  modules: {},
+  actions: {
+    async signUp(context, { email, password }) {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (res) {
+        context.commit("setUser", res.user);
+      } else {
+        throw new Error("could not complete Sign Up");
+      }
+    },
+  },
 });
 
 export default store;

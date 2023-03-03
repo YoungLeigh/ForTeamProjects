@@ -15,7 +15,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@popperjs/core": "^2.11.6",
     "core-js": "^3.8.3",
-    "firebase": "^8.10.1",
+    "firebase": "^9.17.2",
     "install": "^0.13.0",
     "json-server": "^0.17.1",
     "npm": "^9.5.1",
