@@ -6,13 +6,14 @@
         Settings
       </button>
       <button
+        v-if="!user"
         @click="handleLogin"
         class="btn1 btn--full btn--outline"
         type="button"
       >
         Login
       </button>
-      <div class="profile-container">
+      <div v-if="user" class="profile-container">
         <button
           @click="toggleProfile"
           class="btn1 btn--full btn--outline profile-btn"
@@ -55,10 +56,11 @@
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { ref } from "vue";
+import { computed } from "vue";
 
 export default {
   setup() {
-    const profile = ref(true);
+    const profile = ref(false);
 
     const store = useStore();
     const router = useRouter();
@@ -73,7 +75,13 @@ export default {
       store.dispatch("logout");
     };
 
-    return { profile, toggleProfile, handleLogin, handleLogOut };
+    return {
+      profile,
+      user: computed(() => store.state.user),
+      toggleProfile,
+      handleLogin,
+      handleLogOut,
+    };
   },
 };
 </script>
@@ -159,6 +167,7 @@ export default {
   align-items: left;
   font-size: 15px;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .profile-btns {
   align-items: center;

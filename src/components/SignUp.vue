@@ -56,7 +56,7 @@ export default {
           email: email.value,
           password: password.value,
         });
-        router.push("/login");
+        router.push("/");
       } catch (err) {
         email.value = "";
         password.value = "";

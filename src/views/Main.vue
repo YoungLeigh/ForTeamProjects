@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="main-content">
+    <div v-if="authIsReady" class="main-content">
       <Header></Header>
       <TeamInfo></TeamInfo>
     </div>
@@ -10,11 +10,20 @@
 <script>
 import TeamInfo from "./TeamInfo/TeamInfo.vue";
 import Header from "../components/Header.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "Main",
   components: {
     TeamInfo,
     Header,
+  },
+  setup() {
+    const store = useStore();
+    return {
+      authIsReady: computed(() => store.state.authIsReady),
+    };
   },
 };
 </script>
