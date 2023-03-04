@@ -1,6 +1,6 @@
 <template>
   <div class="signup">
-    <h1 class="login-header">ForTeamProjects</h1>
+    <Router-link to="/" class="login-header">ForTeamProjects</Router-link>
     <div class="reset-container">
       <p class="reset-subheader">Sign Up Now</p>
       <div class="login-error-msg" v-if="error">{{ error }}</div>
@@ -49,8 +49,6 @@ export default {
 
     const store = useStore();
     const router = useRouter();
-
-    store.commit("setUser", "yoshi");
 
     const handleSubmit = async () => {
       try {

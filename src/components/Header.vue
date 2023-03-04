@@ -12,23 +12,30 @@
       >
         Login
       </button>
+      <button class="btn1 btn--full btn--outline">
+        <font-awesome-icon class="user-icon" icon="fa-solid fa-circle-user" />
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   setup() {
+    const store = useStore();
     const router = useRouter();
-    function handleLogin() {
+
+    const handleLogin = () => {
       router.push("login");
-    }
-    return { handleLogin };
-  },
-  render() {
-    return h("button", { onClick: this.handleLogin }, "Go to New Route");
+    };
+    const handleLogOut = () => {
+      store.dispatch("logout");
+    };
+
+    return { handleLogin, handleLogOut };
   },
 };
 </script>
@@ -94,5 +101,8 @@ export default {
 .btn--outline:active {
   background-color: #00cc99;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.user-icon {
+  height: 25px;
 }
 </style>

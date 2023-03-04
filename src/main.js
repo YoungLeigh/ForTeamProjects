@@ -12,6 +12,7 @@ import {
   faAddressBook,
   faXmark,
   faCheck,
+  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 /* add icons to the library */
 library.add(
@@ -21,7 +22,8 @@ library.add(
   faUser,
   faAddressBook,
   faXmark,
-  faCheck
+  faCheck,
+  faCircleUser
 );
 
 createApp(App)

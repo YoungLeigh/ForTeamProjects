@@ -2,12 +2,15 @@ import { createStore } from "vuex";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebase/config.js";
 
 const store = createStore({
   state: {
     user: null,
+    authIsReady: false,
     teaminfo: [],
   },
   mutations: {
@@ -17,6 +20,9 @@ const store = createStore({
     },
     setError(state, error) {
       state.error = error;
+    },
+    setAuthIsReady(state, paylaod) {
+      state.authIsReady = paylaod;
     },
   },
   actions: {
@@ -36,7 +42,18 @@ const store = createStore({
         throw new Error("could not complete Login");
       }
     },
+    async logout(context) {
+      console.log("logout action");
+      await signOut(auth);
+      context.commit("setUser", null);
+    },
   },
+});
+
+const unsubscribe = onAuthStateChanged(auth, (user) => {
+  store.commit("setAuthIsReady", true);
+  store.commit("setUser", user);
+  unsubscribe(); //unsubscribe from the change only when we first make the connection
 });
 
 export default store;

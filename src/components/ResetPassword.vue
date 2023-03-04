@@ -1,6 +1,6 @@
 <template>
   <div class="reset-password">
-    <h1 class="login-header">ForTeamProjects</h1>
+    <Router-link to="/" class="login-header">ForTeamProjects</Router-link>
     <div class="reset-container">
       <p class="reset-subheader">Reset Password</p>
       <form @submit.prevent="handleResetPassword" class="reset-form">

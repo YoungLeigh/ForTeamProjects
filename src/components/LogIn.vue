@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h1 class="login-header">ForTeamProjects</h1>
+    <Router-link to="/" class="login-header">ForTeamProjects</Router-link>
     <div class="form-container">
       <p class="login-subheader">Sign In</p>
       <div class="login-error-msg" v-if="error">{{ error }}</div>
@@ -87,6 +87,8 @@ export default {
   text-decoration: none;
   color: #424954;
   white-space: nowrap;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .login-subheader {
   margin-top: 20px;
