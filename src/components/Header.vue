@@ -12,9 +12,41 @@
       >
         Login
       </button>
-      <button class="btn1 btn--full btn--outline">
-        <font-awesome-icon class="user-icon" icon="fa-solid fa-circle-user" />
-      </button>
+      <div class="profile-container">
+        <button
+          @click="toggleProfile"
+          class="btn1 btn--full btn--outline profile-btn"
+        >
+          <font-awesome-icon class="user-icon" icon="fa-solid fa-circle-user" />
+        </button>
+        <div v-if="profile" class="profile-modal">
+          <div class="profile-btns">
+            <font-awesome-icon
+              class="profile-icons"
+              icon="fa-solid fa-user"
+            />Profile
+          </div>
+          <div class="profile-btns">
+            <font-awesome-icon
+              class="profile-icons"
+              icon="fa-solid fa-file"
+            />Projects
+          </div>
+          <div class="profile-btns">
+            <font-awesome-icon
+              class="profile-icons share-icon"
+              icon="fa-solid fa-share"
+            />
+            Share Link
+          </div>
+          <div @click="handleLogOut" class="profile-btns">
+            <font-awesome-icon
+              class="profile-icons"
+              icon="fa-solid fa-right-from-bracket"
+            />Sign Out
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,12 +54,18 @@
 <script>
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { ref } from "vue";
 
 export default {
   setup() {
+    const profile = ref(true);
+
     const store = useStore();
     const router = useRouter();
 
+    const toggleProfile = () => {
+      profile.value = !profile.value;
+    };
     const handleLogin = () => {
       router.push("login");
     };
@@ -35,7 +73,7 @@ export default {
       store.dispatch("logout");
     };
 
-    return { handleLogin, handleLogOut };
+    return { profile, toggleProfile, handleLogin, handleLogOut };
   },
 };
 </script>
@@ -104,5 +142,38 @@ export default {
 }
 .user-icon {
   height: 25px;
+}
+.profile-container {
+  position: relative;
+}
+.profile-modal {
+  position: absolute;
+  width: 150px;
+  right: 0;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  color: #424954;
+  align-items: left;
+  font-size: 15px;
+  cursor: pointer;
+}
+.profile-btns {
+  align-items: center;
+  padding: 15px 0;
+  padding-left: 10px;
+}
+.profile-icons {
+  margin-right: 5px;
+  width: 15px;
+}
+.profile-btns:hover,
+.profile-btns:active {
+  border: 2px solid #59606bfb;
+}
+.share-icon {
+  margin-right: 0;
 }
 </style>
