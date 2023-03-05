@@ -21,12 +21,28 @@
           <font-awesome-icon class="user-icon" icon="fa-solid fa-circle-user" />
         </button>
         <div v-if="profile" class="profile-modal">
-          <div class="profile-btns">
-            <font-awesome-icon
-              class="profile-icons"
-              icon="fa-solid fa-user"
-            />Profile
+          <div class="user-profile-container">
+            <div class="profile-btns">
+              <font-awesome-icon
+                class="profile-icons"
+                icon="fa-solid fa-user"
+              />Profile
+            </div>
+            <div class="user-profile-modal">
+              <p class="profile-modal-header">Profile</p>
+              <div class="profile-modal-container">
+                <font-awesome-icon
+                  class="user-icon-profile"
+                  icon="fa-solid fa-circle-user"
+                />
+                <div class="user-email">{{ userEmail }}</div>
+              </div>
+              <p @click="deleteAccount" class="delete-account">
+                Delete this account
+              </p>
+            </div>
           </div>
+
           <div class="profile-btns">
             <font-awesome-icon
               class="profile-icons"
@@ -49,7 +65,6 @@
         </div>
       </div>
     </div>
-    <div class="profile-modal">profle</div>
   </div>
 </template>
 
@@ -82,6 +97,7 @@ export default {
     return {
       profile,
       user: computed(() => store.state.user),
+      userEmail: computed(() => store.state.user.email),
       toggleProfile,
       handleLogin,
       handleLogOut,
@@ -178,6 +194,7 @@ export default {
   align-items: center;
   padding: 15px 0;
   padding-left: 10px;
+  cursor: pointer;
 }
 .profile-icons {
   margin-right: 5px;
@@ -190,19 +207,51 @@ export default {
 .share-icon {
   margin-right: 0;
 }
-.profile-modal {
+.user-profile-modal {
   position: absolute;
-  width: 150px;
-  left: 0;
-  right: 0;
+  width: 360px;
+  right: 155px;
+  top: 0;
+  /* top: 33%; */
+  /* left: 50%;
+  transform: translateX(-50%); */
   background-color: white;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
   color: #424954;
-  align-items: center;
+  align-items: left;
   font-size: 15px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: auto;
+}
+.profile-modal-header {
+  font-size: 20px;
+  margin: 0;
+  margin: 10px 10px 0 10px;
+  border-bottom: 1.5px solid #96999e;
+}
+.profile-modal-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.user-icon-profile {
+  height: 40px;
+  margin: 10px 0;
+  margin-left: 10px;
+}
+.user-email {
+  margin-left: 10px;
+}
+.delete-account {
+  margin-left: 10px;
+  margin-top: 5px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(238, 77, 77);
+}
+.user-profile-container {
+  position: relative;
 }
 </style>
