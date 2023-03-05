@@ -22,7 +22,7 @@
         </button>
         <div v-if="profile" class="profile-modal">
           <div class="user-profile-container">
-            <div @click.stop="toggleProfileModal" class="profile-btns">
+            <div @click="toggleProfileModal" class="profile-btns">
               <font-awesome-icon
                 class="profile-icons"
                 icon="fa-solid fa-user"
