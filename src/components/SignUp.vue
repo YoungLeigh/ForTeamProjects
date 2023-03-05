@@ -58,7 +58,7 @@ export default {
         });
         router.push("/");
       } catch (err) {
-        email.value = "";
+        email.value = ""; //resetting the form
         password.value = "";
         error.value = err.message;
       }

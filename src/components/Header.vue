@@ -49,6 +49,7 @@
         </div>
       </div>
     </div>
+    <div class="profile-modal">profle</div>
   </div>
 </template>
 
@@ -74,6 +75,9 @@ export default {
     const handleLogOut = () => {
       store.dispatch("logout");
     };
+    const deleteAccount = () => {
+      store.dispatch("deleteProfile");
+    };
 
     return {
       profile,
@@ -81,6 +85,7 @@ export default {
       toggleProfile,
       handleLogin,
       handleLogOut,
+      deleteAccount,
     };
   },
 };
@@ -184,5 +189,20 @@ export default {
 }
 .share-icon {
   margin-right: 0;
+}
+.profile-modal {
+  position: absolute;
+  width: 150px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  color: #424954;
+  align-items: center;
+  font-size: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 </style>

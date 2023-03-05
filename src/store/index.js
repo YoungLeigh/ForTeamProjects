@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  deleteUser,
 } from "firebase/auth";
 import { auth } from "../firebase/config.js";
 
@@ -46,6 +47,11 @@ const store = createStore({
       console.log("logout action");
       await signOut(auth);
       context.commit("setUser", null);
+    },
+    async deleteProfile() {
+      const user = auth.currentUser;
+      await deleteUser(user);
+      console.log("user deleted");
     },
   },
 });
