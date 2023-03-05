@@ -60,6 +60,19 @@ export default {
       } catch (err) {
         email.value = ""; //resetting the form
         password.value = "";
+        switch (err.code) {
+          case "auth/email-already-in-use":
+            err.message = "Email address is already in use";
+            break;
+          case "auth/invalid-email":
+            err.message = "Invalid email address";
+            break;
+          case "auth/weak-password":
+            err.message = "Password should be at least 6 characters";
+            break;
+          default:
+            err.message = "An error occurred. Please try again later.";
+        }
         error.value = err.message;
       }
     };

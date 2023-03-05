@@ -22,13 +22,13 @@
         </button>
         <div v-if="profile" class="profile-modal">
           <div class="user-profile-container">
-            <div class="profile-btns">
+            <div @click.stop="toggleProfileModal" class="profile-btns">
               <font-awesome-icon
                 class="profile-icons"
                 icon="fa-solid fa-user"
               />Profile
             </div>
-            <div class="user-profile-modal">
+            <div v-if="profileModal" class="user-profile-modal">
               <p class="profile-modal-header">Profile</p>
               <div class="profile-modal-container">
                 <font-awesome-icon
@@ -77,12 +77,19 @@ import { computed } from "vue";
 export default {
   setup() {
     const profile = ref(false);
+    const profileModal = ref(false);
 
     const store = useStore();
     const router = useRouter();
 
     const toggleProfile = () => {
       profile.value = !profile.value;
+      if (profileModal.value === true) {
+        profileModal.value = !profileModal.value;
+      }
+    };
+    const toggleProfileModal = () => {
+      profileModal.value = !profileModal.value;
     };
     const handleLogin = () => {
       router.push("login");
@@ -92,12 +99,16 @@ export default {
     };
     const deleteAccount = () => {
       store.dispatch("deleteProfile");
+      router.push("/");
+      window.location.reload(); //make sure to reload the page
     };
 
     return {
       profile,
+      profileModal,
       user: computed(() => store.state.user),
       userEmail: computed(() => store.state.user.email),
+      toggleProfileModal,
       toggleProfile,
       handleLogin,
       handleLogOut,
@@ -250,6 +261,7 @@ export default {
   text-decoration: underline;
   cursor: pointer;
   color: rgb(238, 77, 77);
+  display: inline-block;
 }
 .user-profile-container {
   position: relative;

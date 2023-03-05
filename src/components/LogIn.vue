@@ -64,6 +64,17 @@ export default {
       } catch (err) {
         email.value = "";
         password.value = "";
+        console.log(err.code);
+        switch (err.code) {
+          case "auth/user-not-found":
+            err.message = "Invalid email address";
+            break;
+          case "auth/wrong-password":
+            err.message = "Invalid password";
+            break;
+          default:
+            err.message = "An error occurred. Please try again later.";
+        }
         error.value = err.message;
       }
     };
