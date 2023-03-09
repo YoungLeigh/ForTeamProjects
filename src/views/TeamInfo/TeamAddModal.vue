@@ -43,7 +43,10 @@
           </td>
 
           <td class="td-btn team-info-td">
-            <button class="team-close-btn1 btn--full2 edit-btn">
+            <button
+              @click="addNewMember"
+              class="team-close-btn1 btn--full2 edit-btn"
+            >
               <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />
             </button>
             <button @click="closeAddBtn" class="team-close-btn">
@@ -58,21 +61,41 @@
 
 <script>
 import { ref } from "vue";
-// import { useStore } from "vuex";
+import { v4 as uuidv4 } from "uuid";
+import { useStore } from "vuex";
 
 export default {
   name: "TeamAddModal",
   emit: ["closeAddBtn"],
   setup(props, context) {
-    const newData = ref({
-      memberName: "",
-      memberEmail: "",
-      memberContacts: "",
-    });
+    const memberName = ref("");
+    const memberEmail = ref("");
+    const memberContacts = ref("");
+
+    const store = useStore();
     const closeAddBtn = () => {
       context.emit("closeAddBtn");
     };
-    return { newData, closeAddBtn };
+    const addNewMember = () => {
+      const id = uuidv4();
+      const object = {
+        id,
+        name: memberName.value,
+        email: memberEmail.value,
+        contacts: memberContacts.value,
+      };
+      store.dispatch("addMember", object);
+      memberName.value = "";
+      memberEmail.value = "";
+      memberContacts.value = "";
+    };
+    return {
+      memberName,
+      memberEmail,
+      memberContacts,
+      closeAddBtn,
+      addNewMember,
+    };
   },
 };
 </script>

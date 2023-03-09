@@ -26,6 +26,9 @@ const store = createStore({
     setAuthIsReady(state, paylaod) {
       state.authIsReady = paylaod;
     },
+    addMember(state, object) {
+      state.teaminfo.push(object);
+    },
   },
   actions: {
     async signUp(context, { email, password }) {
@@ -57,6 +60,9 @@ const store = createStore({
     async resetPassword(context, email) {
       await sendPasswordResetEmail(auth, email);
       console.log("reset-email sent successfully");
+    },
+    addMember({ commit }, object) {
+      commit("addMember", object);
     },
   },
 });
