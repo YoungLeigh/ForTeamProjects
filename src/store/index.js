@@ -5,6 +5,7 @@ import {
   signOut,
   onAuthStateChanged,
   deleteUser,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase/config.js";
 
@@ -52,6 +53,10 @@ const store = createStore({
       const user = auth.currentUser;
       await deleteUser(user);
       console.log("user deleted");
+    },
+    async resetPassword(context, email) {
+      await sendPasswordResetEmail(auth, email);
+      console.log("reset-email sent successfully");
     },
   },
 });

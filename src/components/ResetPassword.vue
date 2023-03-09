@@ -3,7 +3,7 @@
     <Router-link to="/" class="login-header">ForTeamProjects</Router-link>
     <div class="reset-container">
       <p class="reset-subheader">Reset Password</p>
-      <form @submit.prevent="handleResetPassword" class="reset-form">
+      <form @submit.prevent="resetPassword" class="reset-form">
         <p class="input-sub">EMAIL</p>
         <input
           class="login-input"
@@ -12,14 +12,33 @@
           placeholder="example@gmail.com"
           v-model="email"
         />
-        <button class="login-btn">Reset Password</button>
+        <button @click="resetPassword" class="login-btn">Reset Password</button>
       </form>
       <p class="login-div-text">or</p>
       <Router-link class="resetpw-btn" to="/login">Back to Login</Router-link>
     </div>
   </div>
 </template>
-<script></script>
+<script>
+import { ref } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const email = ref("");
+    const error = ref("");
+    const store = useStore();
+    const resetPassword = async () => {
+      try {
+        await store.dispatch("resetPassword", email.value);
+      } catch (err) {
+        error.value = err.message;
+        console.log(error.value);
+      }
+    };
+    return { email, error, resetPassword };
+  },
+};
+</script>
 <style>
 .reset-password {
   display: flex;
