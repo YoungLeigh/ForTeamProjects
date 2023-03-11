@@ -13,7 +13,7 @@ const store = createStore({
   state: {
     user: null,
     authIsReady: false,
-    teaminfo: [],
+    teaminfo: {},
   },
   mutations: {
     setUser(state, payload) {
@@ -26,10 +26,11 @@ const store = createStore({
     setAuthIsReady(state, paylaod) {
       state.authIsReady = paylaod;
     },
-    addMember(state, object) {
-      state.teaminfo.push(object);
+    saveNewMember(state, payload) {
+      state.teaminfo = payload;
     },
   },
+
   actions: {
     async signUp(context, { email, password }) {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -51,19 +52,25 @@ const store = createStore({
       console.log("logout action");
       await signOut(auth);
       context.commit("setUser", null);
-    },
+    }, //log out action
     async deleteProfile() {
       const user = auth.currentUser;
       await deleteUser(user);
       console.log("user deleted");
-    },
+    }, //deleting account
     async resetPassword(context, email) {
       await sendPasswordResetEmail(auth, email);
       console.log("reset-email sent successfully");
-    },
-    addMember({ commit }, object) {
-      commit("addMember", object);
-    },
+    }, //resetting password
+    saveMember({ commit }, payload) {
+      db.ref("teaminfo").set(payload);
+      commit("saveNewMember", payload);
+    }, //adding new member to the database
+    async fetchNewMemberData({ commit }) {
+      const snapshot = await db.ref("teaminfo").once("value");
+      const data = snapshot.val();
+      commit("saveNewMember", data);
+    }, //when the data is stored, brings the current data to be rendered to the page
   },
 });
 
