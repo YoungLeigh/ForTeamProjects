@@ -61,7 +61,6 @@
 
 <script>
 import { ref } from "vue";
-import { v4 as uuidv4 } from "uuid";
 import { useStore } from "vuex";
 
 export default {
@@ -76,15 +75,21 @@ export default {
     const closeAddBtn = () => {
       context.emit("closeAddBtn");
     };
-    const addNewMember = () => {
-      const id = uuidv4();
-      const object = {
-        id,
+    const addNewMember = async () => {
+      const data = {
         name: memberName.value,
         email: memberEmail.value,
         contacts: memberContacts.value,
       };
-      store.dispatch("addMember", object);
+      const error = ref("");
+      try {
+        await store.dispatch("saveMember", data);
+        console.log("Data saved successfully!");
+      } catch (err) {
+        err.message = error.value;
+        console.log(error.value);
+        console.log(err);
+      }
       memberName.value = "";
       memberEmail.value = "";
       memberContacts.value = "";

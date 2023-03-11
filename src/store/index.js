@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { db } from "@/firebase/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,7 +14,7 @@ const store = createStore({
   state: {
     user: null,
     authIsReady: false,
-    teaminfo: {},
+    teaminfo: [],
   },
   mutations: {
     setUser(state, payload) {
@@ -62,14 +63,21 @@ const store = createStore({
       await sendPasswordResetEmail(auth, email);
       console.log("reset-email sent successfully");
     }, //resetting password
-    saveMember({ commit }, payload) {
-      db.ref("teaminfo").set(payload);
-      commit("saveNewMember", payload);
+    async saveMember(context, payload) {
+      await db.ref("teaminfo").push(payload);
+      context.dispatch("fetchNewMemberData");
+      // commit("saveNewMember", payload);
     }, //adding new member to the database
-    async fetchNewMemberData({ commit }) {
+    async fetchNewMemberData(context) {
       const snapshot = await db.ref("teaminfo").once("value");
-      const data = snapshot.val();
-      commit("saveNewMember", data);
+      const data = [];
+      snapshot.forEach((childSnapshot) => {
+        data.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val(),
+        });
+      });
+      context.commit("saveNewMember", data);
     }, //when the data is stored, brings the current data to be rendered to the page
   },
 });

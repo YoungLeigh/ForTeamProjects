@@ -15,11 +15,7 @@
 
           <th class="table-actions team-info-th"></th>
         </thead>
-        <tbody
-          v-for="info in $store.state.teaminfo"
-          :key="info.id"
-          :id="info.id"
-        >
+        <tbody v-for="info in teaminfo" :key="info.id" :id="info.id">
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
@@ -64,7 +60,9 @@
 <script>
 import TeamAddModal from "./TeamAddModal.vue";
 import TeamEditModal from "./TeamEditModal.vue";
-import { ref } from "vue";
+import { collection, getDocs } from "firebase/firestore";
+import { ref, onMounted } from "vue";
+import { db } from "@/firebase/config";
 
 export default {
   name: "TeamInfo",
@@ -76,34 +74,27 @@ export default {
   setup() {
     let addModal = ref(false);
     let addTeambtn = ref(true);
+    const teaminfo = ref([]);
     const handleAddModal = () => {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
+    onMounted(async () => {
+      const querySnapshot = await getDocs(collection(db, "teaminfo"));
+      let teaminfos = [];
+      querySnapshot.forEach((doc) => {
+        const teaminfo = {
+          id: doc.id,
+          name: doc.data().name,
+          email: doc.data().email,
+          contacts: doc.data().contacts,
+        };
+        teaminfos.push(teaminfo);
+      });
+      teaminfo.value = teaminfos;
+    });
 
-    return { addModal, addTeambtn, handleAddModal };
-  },
-  methods: {
-    // saveData() {
-    //   fetch("http://localhost:3000/teaminfo")
-    //     .then((res) => res.json())
-    //     .then((data) => (this.teaminfo = data))
-    //     .catch((err) => console.log(err.message));
-    // },
-    // deleteData(id) {
-    //   fetch(this.uri + id, {
-    //     method: "DELETE",
-    //   })
-    //     .then((res) => res.json()) // or res.json()
-    //     .then((data) => (this.teaminfo = data))
-    //     .catch((err) => console.log(err.message));
-    // },
-  },
-  mounted() {
-    // fetch(" http://localhost:3000/teaminfo")
-    //   .then((res) => res.json())
-    //   .then((data) => (this.teaminfo = data))
-    //   .catch((err) => console.log(err.message));
+    return { teaminfo, addModal, addTeambtn, handleAddModal };
   },
 };
 </script>
