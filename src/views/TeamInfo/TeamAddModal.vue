@@ -45,6 +45,7 @@
           <td class="td-btn team-info-td">
             <button
               @click="addNewMember"
+              @keyup.enter.prevent="addNewMember"
               class="team-close-btn1 btn--full2 edit-btn"
             >
               <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />
@@ -61,7 +62,9 @@
 
 <script>
 import { ref } from "vue";
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/firebase/config";
 
 export default {
   name: "TeamAddModal",
@@ -71,26 +74,16 @@ export default {
     const memberEmail = ref("");
     const memberContacts = ref("");
 
-    const store = useStore();
+    // const store = useStore();
     const closeAddBtn = () => {
       context.emit("closeAddBtn");
     };
     const addNewMember = async () => {
-      const data = {
+      await addDoc(collection(db, "TeamInfo"), {
         name: memberName.value,
         email: memberEmail.value,
         contacts: memberContacts.value,
-      };
-      console.log(data);
-      const error = ref("");
-      try {
-        await store.dispatch("saveMember", data);
-        console.log("Data saved successfully!");
-      } catch (err) {
-        err.message = error.value;
-        console.log(error.value);
-        console.log(err);
-      }
+      });
       memberName.value = "";
       memberEmail.value = "";
       memberContacts.value = "";
