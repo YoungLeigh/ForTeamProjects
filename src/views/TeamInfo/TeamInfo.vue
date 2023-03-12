@@ -60,7 +60,7 @@
 <script>
 import TeamAddModal from "./TeamAddModal.vue";
 import TeamEditModal from "./TeamEditModal.vue";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, where, query } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 
@@ -80,21 +80,40 @@ export default {
       addTeambtn.value = !addTeambtn.value;
     };
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "TeamInfo"));
-      const userCollection = [];
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, "=>", doc.data());
-        console.log(doc.data().name);
-        // teaminfo.value = doc.data();
-        const userData = {
-          id: doc.id,
-          name: doc.data().name,
-          email: doc.data().email,
-          contacts: doc.data().contacts,
-        };
-        userCollection.push(userData);
-      });
-      teaminfo.value = userCollection;
+      // // Runs everytime the page is mounted
+      // const querySnapshot = await getDocs(collection(db, "TeamInfo"));
+      // const userCollection = [];
+      // querySnapshot.forEach((doc) => {
+      //   //reading all the document data from the database
+      //   const userData = {
+      //     //variable to save each data in the field
+      //     id: doc.id,
+      //     name: doc.data().name,
+      //     email: doc.data().email,
+      //     contacts: doc.data().contacts,
+      //   };
+      //   userCollection.push(userData);
+      // });
+      // teaminfo.value = userCollection; //all the data is then saved in the teaminfo variable.
+
+      onSnapshot(
+        collection(db, "TeamInfo"), //query to call the database value
+        (querySnapshot) => {
+          const userCollection = [];
+          querySnapshot.forEach((doc) => {
+            //reading all the document data from the database
+            const userData = {
+              //variable to save each data in the field
+              id: doc.id,
+              name: doc.data().name,
+              email: doc.data().email,
+              contacts: doc.data().contacts,
+            };
+            userCollection.push(userData);
+          });
+          teaminfo.value = userCollection; //all the data is then saved in the teaminfo variable.
+        }
+      );
     });
 
     return { teaminfo, addModal, addTeambtn, handleAddModal };
