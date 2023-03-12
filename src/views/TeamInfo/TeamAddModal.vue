@@ -81,6 +81,7 @@ export default {
         email: memberEmail.value,
         contacts: memberContacts.value,
       };
+      console.log(data);
       const error = ref("");
       try {
         await store.dispatch("saveMember", data);

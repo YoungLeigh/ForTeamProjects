@@ -80,18 +80,21 @@ export default {
       addTeambtn.value = !addTeambtn.value;
     };
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, "teaminfo"));
-      let teaminfos = [];
+      const querySnapshot = await getDocs(collection(db, "TeamInfo"));
+      const userCollection = [];
       querySnapshot.forEach((doc) => {
-        const teaminfo = {
+        console.log(doc.id, "=>", doc.data());
+        console.log(doc.data().name);
+        // teaminfo.value = doc.data();
+        const userData = {
           id: doc.id,
           name: doc.data().name,
           email: doc.data().email,
           contacts: doc.data().contacts,
         };
-        teaminfos.push(teaminfo);
+        userCollection.push(userData);
       });
-      teaminfo.value = teaminfos;
+      teaminfo.value = userCollection;
     });
 
     return { teaminfo, addModal, addTeambtn, handleAddModal };
