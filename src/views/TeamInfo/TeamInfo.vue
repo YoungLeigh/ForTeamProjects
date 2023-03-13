@@ -26,8 +26,17 @@
             <td class="table-contact team-info-td">{{ info.contacts }}</td>
 
             <td class="td-btn team-info-td">
-              <TeamEditModal></TeamEditModal>
-
+              <TeamEditModal v-if="editModal"></TeamEditModal>
+              <button
+                type="button"
+                class="team-close-btn btn--full2 edit-btn"
+                @click="handleEditModal"
+              >
+                <font-awesome-icon
+                  icon="fa-solid fa-pen-to-square"
+                  class="team-icon"
+                />
+              </button>
               <button
                 @click="deleteUserData(info.id)"
                 type="button"
@@ -76,16 +85,19 @@ export default {
     TeamEditModal,
   },
   setup() {
-    let addModal = ref(false);
-    let addTeambtn = ref(true);
+    let addModal = ref(false); //team adding modal
+    let editModal = ref(false); //team editing modal
+    let addTeambtn = ref(true); //team adding button
     const teaminfo = ref([]);
     const handleAddModal = () => {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
     const deleteUserData = async (id) => {
-      await deleteDoc(doc(db, "TeamInfo", id));
-      // await db.collection('TeamInfo').doc(id).delete()
+      await deleteDoc(doc(db, "TeamInfo", id)); //deleting target document in the database
+    };
+    const handleEditModal = function () {
+      editModal.value = !editModal.value;
     };
 
     onMounted(async () => {
@@ -110,7 +122,15 @@ export default {
       );
     });
 
-    return { teaminfo, addModal, addTeambtn, handleAddModal, deleteUserData };
+    return {
+      teaminfo,
+      addModal,
+      addTeambtn,
+      editModal,
+      handleEditModal,
+      handleAddModal,
+      deleteUserData,
+    };
   },
 };
 </script>

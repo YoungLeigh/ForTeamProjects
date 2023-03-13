@@ -1,76 +1,68 @@
 <template>
-  <button type="button" class="team-close-btn btn--full2 edit-btn">
-    <font-awesome-icon icon="fa-solid fa-pen-to-square" class="team-icon" />
-  </button>
-  <form
-    @submit.prevent="handleEdit"
-    v-if="openClose"
-    class="modal fade show"
-    style="display: block"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-model="true"
-    role="dialog"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add Member</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            @click="showModal()"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"
-              ><font-awesome-icon icon="fa-solid fa-user"
-            /></span>
+  <div class="teamEditModal">
+    <table class="teamAddModal-table">
+      <thead>
+        <th class="table-name team-add-th">+ Add a Member</th>
+
+        <th class="table-email team-add-th"></th>
+
+        <th class="table-contact team-add-th"></th>
+
+        <th class="table-actions team-add-th"></th>
+      </thead>
+      <tbody>
+        <tr class="team-info-tr">
+          <td class="table-name team-info-td">
             <input
-              v-model="memberName"
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
+              class="team-add-input"
               type="text"
-              class="form-control"
+              name="newName"
               placeholder="Name"
-              required
+              v-model="memberName"
             />
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">@</span>
+          </td>
+
+          <td class="table-email team-info-td">
             <input
-              v-model="memberEmail"
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
+              class="team-add-input"
               type="email"
-              class="form-control"
-              placeholder="Email"
+              name="newEmail"
+              placeholder="example@gmail.com"
+              v-model="memberEmail"
             />
-          </div>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"
-              ><font-awesome-icon icon="fa-solid fa-address-book"
-            /></span>
+          </td>
+
+          <td class="table-contact team-info-td">
             <input
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
+              class="team-add-input"
+              type="text"
+              name="newContacts"
+              placeholder="000-000-000"
               v-model="memberContacts"
-              type="tel"
-              class="form-control"
-              placeholder="Contacts"
             />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            :class="'btn btn-' + variant"
-            data-bs-dismiss="modal"
-            @click="handleEdit()"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+          </td>
+
+          <td class="td-btn team-info-td">
+            <button
+              @click="addNewMember"
+              class="team-close-btn1 btn--full2 edit-btn"
+            >
+              <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />
+            </button>
+            <button @click="closeAddBtn" class="team-close-btn">
+              <font-awesome-icon class="team-icon4" icon="fa-solid fa-xmark" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -84,42 +76,14 @@ export default {
       memberContacts: "",
     };
   },
-  // mounted() {
-  //   fetch(this.uri)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       this.memberName = data.memberName;
-  //       this.memberEmail = data.memberEmail;
-  //       this.memberContacts = data.memberContacts;
-  //     });
-  // },
-  // methods: {
-  //   showModal() {
-  //     this.openClose = !this.openClose;
-  //   },
-  //   handleEdit() {
-  //     this.openClose = !this.openClose;
-  //     fetch("http://localhost:3000/teaminfo", {
-  //       method: "PATCH",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         memberName: this.memberName,
-  //         memberEmail: this.memberEmail,
-  //         memberContacts: this.memberContacts,
-  //       }),
-  //     })
-  //       .then(() => {
-  //         this.$emit("editUser");
-  //       })
-  //       .catch((err) => console.log(err));
-  //   },
-  // },
-  // watch: {
-  //   visible: function (newVal, oldVal) {
-  //     this.openClose = newVal;
-  //     console.log("new" + newVal + "==" + oldVal);
-  //   },
-  // },
 };
 </script>
-<style></style>
+<style>
+.teamEditModal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 350px;
+}
+</style>
