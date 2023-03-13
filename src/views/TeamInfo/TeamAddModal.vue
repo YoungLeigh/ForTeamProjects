@@ -14,6 +14,8 @@
         <tr class="team-info-tr">
           <td class="table-name team-info-td">
             <input
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
               class="team-add-input"
               type="text"
               name="newName"
@@ -24,6 +26,8 @@
 
           <td class="table-email team-info-td">
             <input
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
               class="team-add-input"
               type="email"
               name="newEmail"
@@ -34,6 +38,8 @@
 
           <td class="table-contact team-info-td">
             <input
+              @keyup.enter.prevent="addNewMember"
+              @keyup.escape.prevent="closeAddBtn"
               class="team-add-input"
               type="text"
               name="newContacts"
@@ -45,7 +51,6 @@
           <td class="td-btn team-info-td">
             <button
               @click="addNewMember"
-              @keyup.enter.prevent="addNewMember"
               class="team-close-btn1 btn--full2 edit-btn"
             >
               <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />

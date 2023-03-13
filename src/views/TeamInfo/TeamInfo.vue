@@ -28,7 +28,11 @@
             <td class="td-btn team-info-td">
               <TeamEditModal></TeamEditModal>
 
-              <button type="button" class="team-close-btn">
+              <button
+                @click="deleteUserData(info.id)"
+                type="button"
+                class="team-close-btn"
+              >
                 <font-awesome-icon
                   icon="fa-solid fa-trash"
                   class="team-icon1"
@@ -60,7 +64,7 @@
 <script>
 import TeamAddModal from "./TeamAddModal.vue";
 import TeamEditModal from "./TeamEditModal.vue";
-import { collection, onSnapshot } from "firebase/firestore";
+import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 
@@ -79,6 +83,11 @@ export default {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
+    const deleteUserData = async (id) => {
+      await deleteDoc(doc(db, "TeamInfo", id));
+      // await db.collection('TeamInfo').doc(id).delete()
+    };
+
     onMounted(async () => {
       //gets data from firestore in real-time using onSnapshot
       onSnapshot(
@@ -101,7 +110,7 @@ export default {
       );
     });
 
-    return { teaminfo, addModal, addTeambtn, handleAddModal };
+    return { teaminfo, addModal, addTeambtn, handleAddModal, deleteUserData };
   },
 };
 </script>
