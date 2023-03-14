@@ -83,6 +83,7 @@ export default {
     const closeAddBtn = () => {
       context.emit("closeAddBtn");
     };
+
     const addNewMember = async () => {
       await addDoc(collection(db, "TeamInfo"), {
         name: memberName.value,
@@ -93,6 +94,7 @@ export default {
       memberEmail.value = "";
       memberContacts.value = "";
     };
+
     return {
       memberName,
       memberEmail,

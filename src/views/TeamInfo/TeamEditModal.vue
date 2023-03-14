@@ -84,6 +84,8 @@ export default {
   top: 50%;
   left: 0;
   right: 0;
-  height: 350px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
