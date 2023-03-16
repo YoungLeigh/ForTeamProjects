@@ -114,6 +114,7 @@ export default {
               name: doc.data().name,
               email: doc.data().email,
               contacts: doc.data().contacts,
+              timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
           });

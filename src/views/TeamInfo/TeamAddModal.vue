@@ -68,7 +68,7 @@
 <script>
 import { ref } from "vue";
 // import { useStore } from "vuex";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
 export default {
@@ -89,6 +89,7 @@ export default {
         name: memberName.value,
         email: memberEmail.value,
         contacts: memberContacts.value,
+        timestamp: serverTimestamp(), // add timestamp field
       });
       memberName.value = "";
       memberEmail.value = "";
