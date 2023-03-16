@@ -99,7 +99,7 @@ export default {
     };
     const deleteAccount = () => {
       store.dispatch("deleteProfile");
-      router.push("/");
+      router.push("/signup");
       window.location.reload(); //make sure to reload the page
     };
 
