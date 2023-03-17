@@ -118,6 +118,7 @@ export default {
             };
             userCollection.push(userData);
           });
+          userCollection.sort((a, b) => a.timestamp - b.timestamp); // Sort userCollection array by timestamp field
           teaminfo.value = userCollection; //all the data is then saved in the teaminfo variable.
         }
       );
