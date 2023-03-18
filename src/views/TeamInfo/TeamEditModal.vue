@@ -1,24 +1,24 @@
 <template>
   <div class="teamEditModal">
     <div class="teamEdit-container">
-      <h3>Edit information</h3>
-      <div class="modal-content">
-        <form>
-          <div class="form-group">
-            <label for="name-input">Name:</label>
-            <input type="text" id="name-input" name="name" />
-          </div>
-          <div class="form-group">
-            <label for="email-input">Email:</label>
-            <input type="email" id="email-input" name="email" />
-          </div>
-          <div class="form-group">
-            <label for="phone-input">Contacts:</label>
-            <input type="tel" id="phone-input" name="phone" />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-        <button id="close-modal">Close Modal</button>
+      <h3 class="teamEdit-header">Edit information</h3>
+      <div class="teamEdit-modal-content">
+        <div class="teamEdit-input">
+          <label class="teamEdit-label">Name:</label>
+          <input type="text" class="teamEdit-input" />
+        </div>
+        <div class="teamEdit-input">
+          <label class="teamEdit-label">Email:</label>
+          <input type="email" class="teamEdit-input" />
+        </div>
+        <div class="teamEdit-input">
+          <label class="teamEdit-label">Contacts:</label>
+          <input type="tel" class="teamEdit-input" />
+        </div>
+        <button class="edit-submit-btn" type="submit">Submit</button>
+        <button id="teamEdit-close-btn">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </button>
       </div>
     </div>
   </div>
@@ -44,15 +44,25 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #424954;
+  background-color: #fff;
   width: 360px;
+  border-radius: 15px;
+}
+.teamEdit-header {
+  font-size: 25px;
+  text-decoration: none;
+  color: #424954;
+  white-space: nowrap;
+  margin-top: 15px;
 }
 .teamEdit-container {
   display: flex;
   flex-direction: column;
-  color: #383838;
+  color: #424954;
+  margin-left: 15px;
+  padding-bottom: 15px;
 }
-.modal-container {
+.teamEdit-modal-container {
   display: none;
   position: fixed;
   z-index: 1;
@@ -63,22 +73,57 @@ export default {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
-
-.modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 600px;
+.teamEdit-input {
+  margin-bottom: 7px;
 }
 
 .form-group {
   margin-bottom: 1rem;
 }
+.edit-submit-btn {
+  border-style: none;
+  height: 30px;
+  background-color: #424954;
+  border-radius: 5px;
+  font-family: mainFont, korFont;
+  font-size: 18px;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}
+.teamEdit-input {
+  width: 90%;
+  padding-left: 5px;
+  width: 340px;
+  height: 50px;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  background-color: #ebebeb;
+  border-style: none;
+  color: #818181;
+  font-family: mainFont, korFont;
+  font-size: 19px;
+}
+#teamEdit-close-btn {
+  background-color: transparent;
+  border: none;
+  font-family: mainFont;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+#teamEdit-close-btn:hover,
+#teamEdit-close-btn:active {
+  color: rgb(249, 112, 112);
+}
 
-label {
+.teamEdit-label {
   display: block;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 </style>
