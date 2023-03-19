@@ -6,19 +6,15 @@
       <div class="teamEdit-modal-content">
         <div class="teamEdit-input">
           <label class="teamEdit-label">Name:</label>
-          <input
-            type="text"
-            class="teamEdit-input-field"
-            v-model="name.value"
-          />
+          <input type="text" class="teamEdit-input-field" v-model="name" />
         </div>
         <div class="teamEdit-input">
           <label class="teamEdit-label">Email:</label>
-          <input type="email" class="teamEdit-input-field" />
+          <input type="email" class="teamEdit-input-field" v-model="email" />
         </div>
         <div class="teamEdit-input">
           <label class="teamEdit-label">Contacts:</label>
-          <input type="tel" class="teamEdit-input-field" />
+          <input type="tel" class="teamEdit-input-field" v-model="contacts" />
         </div>
         <button class="edit-submit-btn" type="submit">Save</button>
         <button @click="closeEditModal" id="teamEdit-close-btn">
@@ -30,22 +26,29 @@
 </template>
 
 <script>
-export default {
+import { ref } from "vue";
+import { defineComponent } from "vue";
+// import { doc, updateDoc } from "firebase/firestore";
+export default defineComponent({
   name: "TeamEditModal",
-  data() {
-    return {
-      openClose: this.visible,
-      memberName: "",
-      memberEmail: "",
-      memberContacts: "",
-    };
+  props: {
+    selectedInfo: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
+    const name = ref(props.selectedInfo.name);
+    const email = ref(props.selectedInfo.email);
+    const contacts = ref(props.selectedInfo.contacts);
+    return { name, email, contacts };
   },
   methods: {
     closeEditModal() {
       this.$emit("closeEditModal");
     },
   },
-};
+});
 </script>
 <style>
 .teamEditModal {

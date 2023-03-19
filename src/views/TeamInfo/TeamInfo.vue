@@ -27,13 +27,14 @@
 
             <td class="td-btn team-info-td">
               <TeamEditModal
-                @closeEditModal="handleEditModal"
-                v-if="editModal"
+                v-if="showEditInfo"
+                @closeEditModal="closeEditModal"
+                :selectedInfo="selectedInfo"
               ></TeamEditModal>
               <button
                 type="button"
                 class="team-close-btn btn--full2 edit-btn"
-                @click="handleEditModal"
+                @click="selectDocument(info)"
               >
                 <font-awesome-icon
                   icon="fa-solid fa-pen-to-square"
@@ -96,12 +97,31 @@ export default {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
+    const showEditInfo = ref(false);
+    const selectedInfo = ref(null);
+    const documents = ref([]);
+
+    const selectDocument = async (info) => {
+      if (!info) {
+        return;
+      }
+      // Set the selectedInfo ref to the selected document
+      selectedInfo.value = info;
+      showEditInfo.value = true;
+      console.log(selectedInfo.value.name);
+    };
+    const closeEditModal = () => {
+      // Reset the selected document and hide the editor
+      selectedInfo.value = null;
+      showEditInfo.value = false;
+    };
+
     const deleteUserData = async (id) => {
       await deleteDoc(doc(db, "TeamInfo", id)); //deleting target document in the database
     };
-    const handleEditModal = function () {
-      editModal.value = !editModal.value;
-    };
+    // const handleEditModal = function () {
+    //   editModal.value = !editModal.value;
+    // };
 
     onMounted(async () => {
       //gets data from firestore in real-time using onSnapshot
@@ -132,9 +152,13 @@ export default {
       addModal,
       addTeambtn,
       editModal,
-      handleEditModal,
+      selectedInfo,
+      showEditInfo,
+      documents,
+      selectDocument,
       handleAddModal,
       deleteUserData,
+      closeEditModal,
     };
   },
 };
