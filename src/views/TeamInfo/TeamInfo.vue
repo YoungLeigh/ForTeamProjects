@@ -26,7 +26,10 @@
             <td class="table-contact team-info-td">{{ info.contacts }}</td>
 
             <td class="td-btn team-info-td">
-              <TeamEditModal v-if="editModal"></TeamEditModal>
+              <TeamEditModal
+                @closeEditModal="handleEditModal"
+                v-if="editModal"
+              ></TeamEditModal>
               <button
                 type="button"
                 class="team-close-btn btn--full2 edit-btn"

@@ -6,7 +6,11 @@
       <div class="teamEdit-modal-content">
         <div class="teamEdit-input">
           <label class="teamEdit-label">Name:</label>
-          <input type="text" class="teamEdit-input-field" />
+          <input
+            type="text"
+            class="teamEdit-input-field"
+            v-model="name.value"
+          />
         </div>
         <div class="teamEdit-input">
           <label class="teamEdit-label">Email:</label>
@@ -17,7 +21,7 @@
           <input type="tel" class="teamEdit-input-field" />
         </div>
         <button class="edit-submit-btn" type="submit">Save</button>
-        <button id="teamEdit-close-btn">
+        <button @click="closeEditModal" id="teamEdit-close-btn">
           <font-awesome-icon icon="fa-solid fa-xmark" />
         </button>
       </div>
@@ -36,6 +40,11 @@ export default {
       memberContacts: "",
     };
   },
+  methods: {
+    closeEditModal() {
+      this.$emit("closeEditModal");
+    },
+  },
 };
 </script>
 <style>
@@ -46,8 +55,9 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 360px;
+  width: 340px;
   border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .teamEdit-header {
   font-size: 20px;
@@ -65,6 +75,7 @@ export default {
   background-color: #4f4f4fc4;
   height: 1px;
   margin-left: 0;
+  margin-bottom: 15px;
 }
 .teamEdit-container {
   display: flex;
@@ -93,27 +104,26 @@ export default {
 }
 .teamEdit-input-field {
   width: 90%;
-  padding-left: 5px;
   height: 30px;
   border-radius: 5px;
   border-style: none;
   font-family: mainFont, korFont;
   font-size: 16px;
   background-color: none;
-  border: 2px solid #424954;
+  border: 1.7px solid #424954c7;
 }
 .edit-submit-btn {
   border-style: none;
-  height: 35px;
+  height: 33px;
   background-color: #424954;
   border-radius: 5px;
   font-family: mainFont, korFont;
   font-size: 16px;
   color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   cursor: pointer;
   margin-top: 5px;
-  margin-left: 74%;
+  margin-left: 71.5%;
   padding-left: 15px;
   padding-right: 15px;
 }
