@@ -94,9 +94,11 @@ export default {
     let addTeambtn = ref(true); //team adding button
     const teaminfo = ref([]);
     const handleAddModal = () => {
+      //toggle team add Modal
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
+
     const showEditInfo = ref(false);
     const selectedInfo = ref(null);
     const documents = ref([]);

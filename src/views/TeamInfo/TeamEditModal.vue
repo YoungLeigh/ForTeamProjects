@@ -6,17 +6,34 @@
       <div class="teamEdit-modal-content">
         <div class="teamEdit-input">
           <label class="teamEdit-label">Name:</label>
-          <input type="text" class="teamEdit-input-field" v-model="name" />
+          <input
+            @keyup.enter.prevent="saveChanges"
+            type="text"
+            class="teamEdit-input-field"
+            v-model="name"
+          />
         </div>
         <div class="teamEdit-input">
           <label class="teamEdit-label">Email:</label>
-          <input type="email" class="teamEdit-input-field" v-model="email" />
+          <input
+            @keyup.enter.prevent="saveChanges"
+            type="email"
+            class="teamEdit-input-field"
+            v-model="email"
+          />
         </div>
         <div class="teamEdit-input">
           <label class="teamEdit-label">Contacts:</label>
-          <input type="tel" class="teamEdit-input-field" v-model="contacts" />
+          <input
+            @keyup.enter.prevent="saveChanges"
+            type="tel"
+            class="teamEdit-input-field"
+            v-model="contacts"
+          />
         </div>
-        <button class="edit-submit-btn" type="submit">Save</button>
+        <button @click="saveChanges" class="edit-submit-btn" type="submit">
+          Save
+        </button>
         <button @click="closeEditModal" id="teamEdit-close-btn">
           <font-awesome-icon icon="fa-solid fa-xmark" />
         </button>
@@ -26,22 +43,37 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { defineComponent } from "vue";
-// import { doc, updateDoc } from "firebase/firestore";
+import { ref, defineComponent } from "vue";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/config";
+
 export default defineComponent({
   name: "TeamEditModal",
   props: {
+    //receiving selectedInfo as props
     selectedInfo: {
       type: Object,
       required: true,
     },
   },
   setup(props, { emit }) {
-    const name = ref(props.selectedInfo.name);
+    const name = ref(props.selectedInfo.name); //declaring variables from selectedInfo
     const email = ref(props.selectedInfo.email);
     const contacts = ref(props.selectedInfo.contacts);
-    return { name, email, contacts };
+
+    const saveChanges = async () => {
+      const documentRef = doc(db, "TeamInfo", props.selectedInfo.id);
+      const updatedDocument = {
+        name: name.value,
+        email: email.value,
+        contacts: contacts.value,
+      };
+      await updateDoc(documentRef, updatedDocument);
+      // Emit an event to the parent component to indicate that the document has been saved
+      emit("closeEditModal");
+    };
+
+    return { saveChanges, name, email, contacts };
   },
   methods: {
     closeEditModal() {
