@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   getAuth,
+  signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "../firebase/config.js";
 
@@ -61,6 +62,16 @@ const store = createStore({
         context.commit("setUser", res.user);
       } else {
         throw new Error("could not complete Login");
+      }
+    },
+    async signInWithGoogle(context) {
+      //signing up with google
+      const provider = new GoogleAuthProvider();
+      const res = await signInWithPopup(getAuth(), provider);
+      if (res) {
+        context.commit("setUser", res.user);
+      } else {
+        throw new Error("could not complete Sign Up");
       }
     },
     async logout(context) {

@@ -4,7 +4,7 @@
     <div class="form-container">
       <p class="login-subheader">Sign In</p>
       <div class="login-error-msg" v-if="error">{{ error }}</div>
-      <form @submit.prevent="handleSubmit" class="login-form">
+      <form @submit.prevent="handleLoginWithEmail" class="login-form">
         <p class="input-sub">EMAIL</p>
         <input
           class="login-input"
@@ -20,12 +20,12 @@
           required
           v-model="password"
         />
-        <button @click="handleSubmit" class="login-btn">
+        <button @click="handleLoginWithEmail" class="login-btn">
           Sign in with Email
         </button>
       </form>
       <p class="login-div-text">or</p>
-      <button class="login-btn-google">
+      <button @click="handleSignInWithGoogle" class="login-btn-google">
         <img class="google-icon" src="@/assets/images/google.png" />Continue
         with Google
       </button>
@@ -54,7 +54,7 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    const handleSubmit = async () => {
+    const handleLoginWithEmail = async () => {
       try {
         await store.dispatch("login", {
           email: email.value,
@@ -78,8 +78,23 @@ export default {
         error.value = err.message;
       }
     };
+    const handleSignInWithGoogle = async () => {
+      try {
+        await store.dispatch("signInWithGoogle");
+        router.push("/");
+      } catch (err) {
+        console.log(err);
+        error.value = err.message;
+      }
+    };
 
-    return { email, password, error, handleSubmit };
+    return {
+      email,
+      password,
+      error,
+      handleLoginWithEmail,
+      handleSignInWithGoogle,
+    };
   },
 };
 </script>
