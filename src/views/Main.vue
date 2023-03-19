@@ -3,6 +3,8 @@
     <div v-if="authIsReady" class="main-content">
       <Header></Header>
       <TeamInfo></TeamInfo>
+      <OnlineMeetings></OnlineMeetings>
+      <ProjectsInfo></ProjectsInfo>
     </div>
   </div>
 </template>
@@ -12,12 +14,16 @@ import TeamInfo from "./TeamInfo/TeamInfo.vue";
 import Header from "../components/Header.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import OnlineMeetings from "./MeetingsInfo.vue/OnlineMeetings.vue";
+import ProjectsInfo from "./ProjectsInfo/ProjectsInfo.vue";
 
 export default {
   name: "Main",
   components: {
     TeamInfo,
     Header,
+    OnlineMeetings,
+    ProjectsInfo,
   },
   setup() {
     const store = useStore();
