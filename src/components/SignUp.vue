@@ -20,12 +20,12 @@
           required
           v-model="password"
         />
-        <button @click="handleSubmit" type="submit" class="login-btn">
+        <button @click="handleSignUpEmail" type="submit" class="login-btn">
           Sign up with Email
         </button>
       </form>
       <p class="login-div-text">or</p>
-      <button class="login-btn-google">
+      <button @click="handleSignUpGoogle" class="login-btn-google">
         <img class="google-icon" src="@/assets/images/google.png" />Sign up with
         Google
       </button>
@@ -50,7 +50,7 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    const handleSubmit = async () => {
+    const handleSignUpEmail = async () => {
       try {
         await store.dispatch("signUp", {
           email: email.value,
@@ -76,7 +76,18 @@ export default {
         error.value = err.message;
       }
     };
-    return { email, password, error, handleSubmit };
+
+    const handleSignUpGoogle = async () => {
+      try {
+        await store.dispatch("signUpWithGoogle");
+        router.push("/");
+      } catch (err) {
+        console.log(err);
+        error.value = err.message;
+      }
+    };
+
+    return { email, password, error, handleSignUpEmail, handleSignUpGoogle };
   },
 };
 </script>

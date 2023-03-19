@@ -7,6 +7,9 @@ import {
   onAuthStateChanged,
   deleteUser,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAuth,
 } from "firebase/auth";
 import { auth } from "../firebase/config.js";
 
@@ -34,7 +37,18 @@ const store = createStore({
 
   actions: {
     async signUp(context, { email, password }) {
+      //signing up with email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      if (res) {
+        context.commit("setUser", res.user);
+      } else {
+        throw new Error("could not complete Sign Up");
+      }
+    },
+    async signUpWithGoogle(context) {
+      //signing up with google
+      const provider = new GoogleAuthProvider();
+      const res = await signInWithPopup(getAuth(), provider);
       if (res) {
         context.commit("setUser", res.user);
       } else {
@@ -68,20 +82,8 @@ const store = createStore({
       context.dispatch("fetchNewMemberData");
       // commit("saveNewMember", payload);
     }, //adding new member to the database
-    async fetchNewMemberData(context) {
-      const snapshot = await db.ref("teaminfo").once("value");
-      const data = [];
-      snapshot.forEach((childSnapshot) => {
-        data.push({
-          id: childSnapshot.key,
-          ...childSnapshot.val(),
-        });
-      });
-      context.commit("saveNewMember", data);
-    }, //when the data is stored, brings the current data to be rendered to the page
   },
 });
-
 const unsubscribe = onAuthStateChanged(auth, (user) => {
   store.commit("setAuthIsReady", true);
   store.commit("setUser", user);
