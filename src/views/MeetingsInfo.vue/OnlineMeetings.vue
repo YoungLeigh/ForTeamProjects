@@ -5,26 +5,39 @@
         <p class="title">Meetings</p>
       </div>
 
-      <table class="teaminfo-table">
+      <table class="meetingsinfo-table">
         <thead>
-          <th class="table-name meetings-info-th">Name</th>
+          <th class="table-description meetings-info-th">Description</th>
 
-          <th class="table-email meetings-info-th">Email</th>
+          <th class="table-month meetings-info-th">Date</th>
 
-          <th class="table-contact meetings-info-th">Contact</th>
+          <th class="table-day meetings-info-th"></th>
+
+          <th class="table-year meetings-info-th"></th>
+
+          <th class="table-time meetings-info-th"></th>
 
           <th class="table-actions meetings-info-th"></th>
         </thead>
-        <tbody v-for="info in teaminfo" :key="info.id" :id="info.id">
+        <tbody v-for="info in meetingsinfo" :key="info.id" :id="info.id">
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
-            <td class="table-name meetings-info-td">{{ info.name }}</td>
+            <td class="table-description meetings-info-td">
+              {{ info.description }}
+            </td>
 
-            <td class="table-email meetings-info-td">{{ info.email }}</td>
+            <td class="table-month meetings-info-td">{{ info.month }}</td>
 
-            <td class="table-contact meetings-info-td">
-              {{ info.contacts }}
+            <td class="table-day meetings-info-td">
+              {{ info.day }}
+            </td>
+
+            <td class="table-year meetings-info-td">
+              {{ info.year }}
+            </td>
+            <td class="table-time meetings-info-td">
+              {{ info.time }}
             </td>
 
             <td class="td-btn meetings-info-td">
@@ -63,14 +76,21 @@ import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 
 export default {
-  name: "TeamInfo",
+  name: "MeetingsInfo",
   props: {},
   components: {},
   setup() {
+    const selectedDate = ref({
+      month: "",
+      day: "",
+      year: "",
+      time: "",
+    });
+
     let addModal = ref(false); //team adding modal
     let editModal = ref(false); //team editing modal
     let addTeambtn = ref(true); //team adding button
-    const teaminfo = ref([]);
+    const meetingsinfo = ref([]);
     const handleAddModal = () => {
       //toggle team add Modal
       addModal.value = !addModal.value;
@@ -97,7 +117,7 @@ export default {
     };
 
     const deleteUserData = async (id) => {
-      await deleteDoc(doc(db, "TeamInfo", id)); //deleting target document in the database
+      await deleteDoc(doc(db, "MeetingsInfo", id)); //deleting target document in the database
     };
     // const handleEditModal = function () {
     //   editModal.value = !editModal.value;
@@ -106,7 +126,7 @@ export default {
     onMounted(async () => {
       //gets data from firestore in real-time using onSnapshot
       onSnapshot(
-        collection(db, "TeamInfo"), //query to call the database value
+        collection(db, "MeetingsInfo"), //query to call the database value
         (querySnapshot) => {
           const userCollection = [];
           querySnapshot.forEach((doc) => {
@@ -114,21 +134,23 @@ export default {
             const userData = {
               //variable to save each data in the field
               id: doc.id,
-              name: doc.data().name,
-              email: doc.data().email,
-              contacts: doc.data().contacts,
+              description: doc.data().description,
+              month: doc.data().month,
+              day: doc.data().day,
+              time: doc.data().time,
+              year: doc.data().year,
               timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
           });
           userCollection.sort((a, b) => a.timestamp - b.timestamp); // Sort userCollection array by timestamp field
-          teaminfo.value = userCollection; //all the data is then saved in the teaminfo variable.
+          meetingsinfo.value = userCollection; //all the data is then saved in the meetingsinfo variable.
         }
       );
     });
 
     return {
-      teaminfo,
+      meetingsinfo,
       addModal,
       addTeambtn,
       editModal,
@@ -144,7 +166,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .meetings-info {
   background-color: #a6deae;
   margin-top: 15px;
@@ -220,7 +242,7 @@ export default {
   box-shadow: inset 0 0 0 1.5px #fff;
   border-style: none;
 }
-.teaminfo-table {
+.meetingsinfo-table {
   border-collapse: collapse;
   border-spacing: 0;
   border-radius: 12px;
@@ -278,16 +300,19 @@ export default {
   width: 17px;
   color: #424954;
 }
-.table-name {
-  width: 28%;
+.table-description {
+  width: 70%;
 }
-/* .table-email {
-  width: 35%;
-} */
-.table-contact {
-  width: 20%;
+.table-month {
+  width: 7%;
+}
+.table-day {
+  width: 7%;
+}
+.table-year {
+  width: 10%;
 }
 .table-actions {
-  width: 10%;
+  width: 5%;
 }
 </style>

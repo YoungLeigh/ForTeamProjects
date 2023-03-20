@@ -2,7 +2,7 @@
   <section class="team-info">
     <div class="team-info-content">
       <div class="team-info-title">
-        <p class="title">Team Info</p>
+        <p class="title">Members</p>
       </div>
 
       <table class="teaminfo-table">

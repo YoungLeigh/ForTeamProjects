@@ -84,7 +84,7 @@ export default defineComponent({
 </script>
 <style>
 .teamEditModal {
-  position: absolute;
+  position: fixed;
   display: inline-block;
   top: 50%;
   left: 50%;
