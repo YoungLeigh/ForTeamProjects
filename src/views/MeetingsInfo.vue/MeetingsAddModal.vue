@@ -70,7 +70,7 @@ export default {
   setup(props, context) {
     const dateTime = ref(new Date());
 
-    const dateOptions = { month: "short", day: "2-digit", year: "numeric" };
+    const dateOptions = { month: "short", day: "2-digit", year: "numeric" }; //changing the date form to custom form
     const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
 
     const date = ref(dateTime.value.toLocaleString("en-US", dateOptions));
@@ -99,6 +99,7 @@ export default {
     };
 
     watch(dateTime, (newValue) => {
+      //watching the changes in data (selecting the date in calendar) and applying change
       date.value = newValue.toLocaleString("en-US", dateOptions);
       time.value = newValue.toLocaleString("en-US", timeOptions);
     });
