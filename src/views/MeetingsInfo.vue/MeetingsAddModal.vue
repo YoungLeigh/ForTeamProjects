@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr class="team-info-tr">
-          <td class="table-description team-info-td">
+          <td class="table-description meetings-info-td">
             <input
               @keyup.enter.prevent="addNewMember"
               @keyup.escape.prevent="closeAddBtn"
@@ -22,10 +22,10 @@
             />
           </td>
 
-          <td class="table-date team-info-td">
+          <td class="table-date meetings-info-td">
             <div class="table-date-row">
-              <div class="meetings-add-date">{{ "what" }}</div>
-              <VDatePicker v-model="date">
+              <div class="meetings-add-date">{{ date }} {{ time }}</div>
+              <VDatePicker v-model="dateTime" mode="dateTime">
                 <template #default="{ togglePopover }">
                   <button
                     class="team-close-btn1 btn--full2 edit-btn"
@@ -41,7 +41,7 @@
             </div>
           </td>
 
-          <td class="td-btn table-actions team-info-td">
+          <td class="td-btn table-actions meetings-info-td">
             <button
               @click="addNewMember"
               class="team-close-btn1 btn--full2 edit-btn"
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 // import { useStore } from "vuex";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase/config";
@@ -68,7 +68,15 @@ export default {
   name: "MeetingsAddModal",
   emit: ["closeAddBtn"],
   setup(props, context) {
-    const date = ref(new Date());
+    const dateTime = ref(new Date());
+
+    const dateOptions = { month: "short", day: "2-digit", year: "numeric" };
+    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
+
+    const date = ref(dateTime.value.toLocaleString("en-US", dateOptions));
+    const time = ref(dateTime.value.toLocaleString("en-US", timeOptions));
+
+    // const date = ref(new Date());
     const memberName = ref("");
     const memberEmail = ref("");
     const memberContacts = ref("");
@@ -90,7 +98,15 @@ export default {
       memberContacts.value = "";
     };
 
+    watch(dateTime, (newValue) => {
+      date.value = newValue.toLocaleString("en-US", dateOptions);
+      time.value = newValue.toLocaleString("en-US", timeOptions);
+    });
+
     return {
+      date,
+      dateTime,
+      time,
       memberName,
       memberEmail,
       memberContacts,
@@ -125,6 +141,22 @@ export default {
   border-collapse: separate;
   border-spacing: 6px 8px;
 }
+.meetings-info-td {
+  text-align: left;
+  background-color: #e2f0d9;
+  padding-left: 5px;
+  font-size: 15px;
+  height: 30px;
+  border-radius: 7px;
+}
+.td-btn {
+  display: flex;
+  flex-direction: row;
+  background-color: #a6deae;
+  height: 100%;
+  align-items: center;
+}
+
 .team-icon3 {
   width: 22px;
   color: rgb(209, 248, 215);
@@ -173,10 +205,10 @@ export default {
   width: 100%;
 }
 .table-description {
-  width: 30%;
+  width: 60%;
 }
 .table-date {
-  width: 20%;
+  width: 30%;
 }
 .table-actions {
   width: 10%;
