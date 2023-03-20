@@ -3,7 +3,7 @@
     <div v-if="authIsReady" class="main-content">
       <Header></Header>
       <TeamInfo></TeamInfo>
-      <OnlineMeetings></OnlineMeetings>
+      <MeetingsInfo></MeetingsInfo>
       <ProjectsInfo></ProjectsInfo>
     </div>
   </div>
@@ -14,7 +14,7 @@ import TeamInfo from "./TeamInfo/TeamInfo.vue";
 import Header from "../components/Header.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import OnlineMeetings from "./MeetingsInfo.vue/OnlineMeetings.vue";
+import MeetingsInfo from "./MeetingsInfo.vue/MeetingsInfo.vue";
 import ProjectsInfo from "./ProjectsInfo/ProjectsInfo.vue";
 
 export default {
@@ -22,7 +22,7 @@ export default {
   components: {
     TeamInfo,
     Header,
-    OnlineMeetings,
+    MeetingsInfo,
     ProjectsInfo,
   },
   setup() {

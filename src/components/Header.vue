@@ -129,6 +129,7 @@ export default {
   max-width: 750px;
   margin: auto;
   justify-content: space-between;
+  margin-top: 10px;
 }
 .logo {
   font-family: titleFont;

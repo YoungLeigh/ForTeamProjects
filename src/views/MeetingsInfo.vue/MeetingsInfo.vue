@@ -11,8 +11,6 @@
 
           <th class="table-date meetings-info-th">Date</th>
 
-          <th class="table-time meetings-info-th"></th>
-
           <th class="table-actions meetings-info-th"></th>
         </thead>
         <tbody v-for="info in meetingsinfo" :key="info.id" :id="info.id">
@@ -25,26 +23,14 @@
 
             <td class="table-date meetings-info-td">{{ info.date }}</td>
 
-            <td class="table-time meetings-info-td">
-              {{ info.time }}
-            </td>
-
             <td class="td-btn meetings-info-td">
-              <div class="meetings-info-calendar">
-                <VDatePicker
-                  v-if="showCalendar"
-                  v-model="date"
-                  mode="dateTime"
-                  :color="calendarColor"
-                  is24hr
-                />
-              </div>
               <button
-                @click="handleShowCalendar"
+                type="button"
                 class="team-close-btn btn--full2 edit-btn"
+                @click="selectDocument(info)"
               >
                 <font-awesome-icon
-                  icon="fa-regular fa-calendar"
+                  icon="fa-solid fa-pen-to-square"
                   class="team-icon"
                 />
               </button>
@@ -64,6 +50,10 @@
         </tbody>
       </table>
       <div>
+        <MeetingsAddModal
+          v-if="addModal"
+          @closeAddBtn="handleAddModal"
+        ></MeetingsAddModal>
         <button
           v-if="addTeambtn"
           @click="handleAddModal"
@@ -82,11 +72,12 @@
 import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
+import MeetingsAddModal from "./MeetingsAddModal.vue";
 
 export default {
   name: "MeetingsInfo",
   props: {},
-  components: {},
+  components: { MeetingsAddModal },
   setup() {
     const selectedDate = ref({
       month: "",
@@ -299,7 +290,7 @@ export default {
   color: #a6deae;
 }
 .team-icon {
-  width: 18px;
+  width: 20px;
   color: #424954;
 }
 .team-icon:hover,
@@ -325,15 +316,5 @@ export default {
 }
 .table-actions {
   width: 5%;
-}
-.meetings-info-calendar {
-  position: fixed;
-  display: inline-block;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 </style>

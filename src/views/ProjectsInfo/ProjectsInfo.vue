@@ -43,11 +43,12 @@
                 />
               </div>
               <button
-                @click="handleShowCalendar"
+                type="button"
                 class="team-close-btn btn--full2 edit-btn"
+                @click="selectDocument(info)"
               >
                 <font-awesome-icon
-                  icon="fa-regular fa-calendar"
+                  icon="fa-solid fa-pen-to-square"
                   class="team-icon"
                 />
               </button>
@@ -301,7 +302,7 @@ export default {
   color: #a6deae;
 }
 .team-icon {
-  width: 18px;
+  width: 20px;
   color: #424954;
 }
 .team-icon:hover,
