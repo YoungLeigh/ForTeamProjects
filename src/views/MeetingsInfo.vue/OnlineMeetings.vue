@@ -7,7 +7,7 @@
 
       <table class="meetingsinfo-table">
         <thead>
-          <th class="table-description meetings-info-th">Description</th>
+          <th class="table-description meetings-info-th">Information</th>
 
           <th class="table-month meetings-info-th">Date</th>
 
@@ -41,16 +41,17 @@
             </td>
 
             <td class="td-btn meetings-info-td">
+              <VDatePicker v-if="showCalendar" v-model="date" mode="dateTime" />
               <button
-                type="button"
+                @click="handleShowCalendar"
                 class="team-close-btn btn--full2 edit-btn"
-                @click="selectDocument(info)"
               >
                 <font-awesome-icon
-                  icon="fa-solid fa-pen-to-square"
+                  icon="fa-regular fa-calendar"
                   class="team-icon"
                 />
               </button>
+
               <button
                 @click="deleteUserData(info.id)"
                 type="button"
@@ -87,6 +88,8 @@ export default {
       time: "",
     });
 
+    let showCalendar = ref(false);
+
     let addModal = ref(false); //team adding modal
     let editModal = ref(false); //team editing modal
     let addTeambtn = ref(true); //team adding button
@@ -96,11 +99,13 @@ export default {
       addModal.value = !addModal.value;
       addTeambtn.value = !addTeambtn.value;
     };
-
     const showEditInfo = ref(false);
     const selectedInfo = ref(null);
     const documents = ref([]);
 
+    const handleShowCalendar = () => {
+      showCalendar.value = !showCalendar.value; //toggles showing calendar
+    };
     const selectDocument = async (info) => {
       if (!info) {
         return;
@@ -150,6 +155,8 @@ export default {
     });
 
     return {
+      showCalendar,
+      handleShowCalendar,
       meetingsinfo,
       addModal,
       addTeambtn,
@@ -285,7 +292,7 @@ export default {
   color: #a6deae;
 }
 .team-icon {
-  width: 20px;
+  width: 18px;
   color: #424954;
 }
 .team-icon:hover,
