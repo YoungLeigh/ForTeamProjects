@@ -70,7 +70,6 @@
         </button>
       </div>
     </div>
-    <div></div>
   </section>
 </template>
 

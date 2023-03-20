@@ -9,11 +9,7 @@
         <thead>
           <th class="table-description meetings-info-th">Information</th>
 
-          <th class="table-month meetings-info-th">Date</th>
-
-          <th class="table-day meetings-info-th"></th>
-
-          <th class="table-year meetings-info-th"></th>
+          <th class="table-date meetings-info-th">Date</th>
 
           <th class="table-time meetings-info-th"></th>
 
@@ -27,21 +23,22 @@
               {{ info.description }}
             </td>
 
-            <td class="table-month meetings-info-td">{{ info.month }}</td>
+            <td class="table-date meetings-info-td">{{ info.date }}</td>
 
-            <td class="table-day meetings-info-td">
-              {{ info.day }}
-            </td>
-
-            <td class="table-year meetings-info-td">
-              {{ info.year }}
-            </td>
             <td class="table-time meetings-info-td">
               {{ info.time }}
             </td>
 
             <td class="td-btn meetings-info-td">
-              <VDatePicker v-if="showCalendar" v-model="date" mode="dateTime" />
+              <div class="meetings-info-calendar">
+                <VDatePicker
+                  v-if="showCalendar"
+                  v-model="date"
+                  mode="dateTime"
+                  :color="calendarColor"
+                  is24hr
+                />
+              </div>
               <button
                 @click="handleShowCalendar"
                 class="team-close-btn btn--full2 edit-btn"
@@ -66,6 +63,16 @@
           </tr>
         </tbody>
       </table>
+      <div>
+        <button
+          v-if="addTeambtn"
+          @click="handleAddModal"
+          class="team-add-btn btn--full1 btn--outline1"
+          type="button"
+        >
+          +Add Meeting
+        </button>
+      </div>
     </div>
     <div></div>
   </section>
@@ -88,7 +95,8 @@ export default {
       time: "",
     });
 
-    let showCalendar = ref(false);
+    let showCalendar = ref(false); // showing calendar
+    const calendarColor = ref("teal");
 
     let addModal = ref(false); //team adding modal
     let editModal = ref(false); //team editing modal
@@ -140,10 +148,8 @@ export default {
               //variable to save each data in the field
               id: doc.id,
               description: doc.data().description,
-              month: doc.data().month,
-              day: doc.data().day,
+              date: doc.data().date,
               time: doc.data().time,
-              year: doc.data().year,
               timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
@@ -156,6 +162,7 @@ export default {
 
     return {
       showCalendar,
+      calendarColor,
       handleShowCalendar,
       meetingsinfo,
       addModal,
@@ -182,7 +189,7 @@ export default {
   display: inline-block;
   width: 750px;
   max-width: 750px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .meetings-info-content {
   display: flex;
@@ -308,18 +315,25 @@ export default {
   color: #424954;
 }
 .table-description {
-  width: 70%;
+  width: 60%;
 }
-.table-month {
-  width: 7%;
-}
-.table-day {
-  width: 7%;
-}
-.table-year {
+.table-date {
   width: 10%;
+}
+.table-time {
+  width: 8%;
 }
 .table-actions {
   width: 5%;
+}
+.meetings-info-calendar {
+  position: fixed;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 </style>
