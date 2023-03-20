@@ -23,16 +23,25 @@
           </td>
 
           <td class="table-date team-info-td">
-            <input
-              class="team-add-input"
-              type="text"
-              name="newEmail"
-              placeholder="Date"
-              v-model="memberEmail"
-            />
+            <div class="table-date-row">
+              <div class="meetings-add-date">{{ "what" }}</div>
+              <VDatePicker v-model="date">
+                <template #default="{ togglePopover }">
+                  <button
+                    class="team-close-btn1 btn--full2 edit-btn"
+                    @click="togglePopover"
+                  >
+                    <font-awesome-icon
+                      class="team-icon5"
+                      icon="fa-regular fa-calendar"
+                    />
+                  </button>
+                </template>
+              </VDatePicker>
+            </div>
           </td>
 
-          <td class="td-btn team-info-td">
+          <td class="td-btn table-actions team-info-td">
             <button
               @click="addNewMember"
               class="team-close-btn1 btn--full2 edit-btn"
@@ -59,6 +68,7 @@ export default {
   name: "MeetingsAddModal",
   emit: ["closeAddBtn"],
   setup(props, context) {
+    const date = ref(new Date());
     const memberName = ref("");
     const memberEmail = ref("");
     const memberContacts = ref("");
@@ -127,6 +137,14 @@ export default {
   width: 15px;
   color: rgb(209, 248, 215);
 }
+.team-icon5 {
+  width: 18px;
+  color: #424954;
+}
+.team-icon5:hover,
+.team-icon5:active {
+  color: rgb(255, 255, 255);
+}
 .team-icon4:hover,
 .team-icon4:active {
   color: rgb(249, 112, 112);
@@ -145,5 +163,30 @@ export default {
   text-align: left;
   color: rgb(225, 250, 229);
   font-size: 20px;
+}
+.table-date-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.team-info-tr {
+  width: 100%;
+}
+.table-description {
+  width: 30%;
+}
+.table-date {
+  width: 20%;
+}
+.table-actions {
+  width: 10%;
+}
+.meetings-add-date {
+  width: 90%;
+  background: none;
+  border: none;
+  font-family: mainFont;
+  font-size: 15px;
+  color: #424954;
 }
 </style>
