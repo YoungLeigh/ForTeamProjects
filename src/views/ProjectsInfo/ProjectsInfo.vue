@@ -24,11 +24,6 @@
             </td>
 
             <td class="table-deadline projects-info-td">
-              <ProjectsEditModal
-                v-if="showEditInfo"
-                @closeEditModal="closeEditModal"
-                :selectedInfo="selectedInfo"
-              ></ProjectsEditModal>
               {{ info.deadline }}
             </td>
             <td style="display: none">
@@ -37,6 +32,11 @@
           </tr>
         </tbody>
       </table>
+      <ProjectsEditModal
+        v-if="showEditInfo"
+        @closeEditModal="closeEditModal"
+        :selectedInfo="selectedInfo"
+      ></ProjectsEditModal>
       <div>
         <ProjectsAddModal
           v-if="addModal"
@@ -93,8 +93,8 @@ export default {
     };
     const closeEditModal = () => {
       // Reset the selected document and hide the editor
-      console.log("ok");
       showEditInfo.value = false;
+      console.log(showEditInfo.value);
       selectedInfo.value = "";
     };
 
