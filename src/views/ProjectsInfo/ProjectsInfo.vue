@@ -1,39 +1,33 @@
 <template>
-  <section class="meetings-info">
-    <div class="meetings-info-content">
-      <div class="meetings-info-title">
+  <section class="projects-info">
+    <div class="projects-info-content">
+      <div class="projects-info-title">
         <p class="title">Projects</p>
       </div>
 
-      <table class="meetingsinfo-table">
+      <table class="projectsinfo-table">
         <thead>
-          <th class="table-description meetings-info-th">Task</th>
+          <th class="table-task projects-info-th">Task</th>
 
-          <th class="table-description meetings-info-th">Description</th>
-
-          <th class="table-date meetings-info-th">Deadline</th>
-          <th class="table-date meetings-info-th">Links</th>
-          <th class="table-actions meetings-info-th"></th>
+          <th class="table-deadline projects-info-th">Deadline</th>
+          <th class="table-link projects-info-th">Links</th>
+          <th class="table-actions projects-info-th"></th>
         </thead>
         <tbody v-for="info in meetingsinfo" :key="info.id" :id="info.id">
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
-            <td class="table-name meetings-info-td">
+            <td class="table-task projects-info-td">
               {{ info.description }}
             </td>
-            <td class="table-description meetings-info-td">
-              {{ info.description }}
+            <td class="table-deadline projects-info-td">
+              {{ info.date }}
             </td>
 
-            <td class="table-deadline meetings-info-td">{{ info.date }}</td>
+            <td class="table-link projects-info-td">{{ info.date }}</td>
 
-            <td class="table-time meetings-info-td">
-              {{ info.time }}
-            </td>
-
-            <td class="td-btn meetings-info-td">
-              <div class="meetings-info-calendar">
+            <td class="td-btn projects-info-td">
+              <div class="projects-info-calendar">
                 <VDatePicker
                   v-if="showCalendar"
                   v-model="date"
@@ -87,7 +81,7 @@ import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 
 export default {
-  name: "MeetingsInfo",
+  name: "projectsinfo",
   props: {},
   components: {},
   setup() {
@@ -184,7 +178,7 @@ export default {
 </script>
 
 <style scoped>
-.meetings-info {
+.projects-info {
   background-color: #a6deae;
   margin-top: 15px;
   border-radius: 35px;
@@ -194,7 +188,7 @@ export default {
   max-width: 750px;
   margin-top: 30px;
 }
-.meetings-info-content {
+.projects-info-content {
   display: flex;
   flex-direction: column;
   grid-template-columns:
@@ -204,12 +198,12 @@ export default {
   padding: 30px;
   padding-top: 25px;
 }
-.meetings-info-title {
+.projects-info-title {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
 }
-.meetings-info-title :nth-child(2) {
+.projects-info-title :nth-child(2) {
   margin-left: 20px;
   margin-right: 5px;
 }
@@ -224,7 +218,7 @@ export default {
   color: white;
 }
 
-/*Input contents for meetings-info*/
+/*Input contents for projects-info*/
 
 .team-close-btn {
   background-color: transparent;
@@ -259,7 +253,7 @@ export default {
   box-shadow: inset 0 0 0 1.5px #fff;
   border-style: none;
 }
-.meetingsinfo-table {
+.projectsinfo-table {
   border-collapse: collapse;
   border-spacing: 0;
   border-radius: 12px;
@@ -269,7 +263,7 @@ export default {
   border-spacing: 6px 8px;
 }
 
-.meetings-info-td {
+.projects-info-td {
   text-align: left;
   background-color: #e2f0d9;
   padding-left: 5px;
@@ -277,7 +271,7 @@ export default {
   height: 30px;
   border-radius: 7px;
 }
-.meetings-info-th {
+.projects-info-th {
   padding: 10px 0px;
   text-align: left;
   background-color: none;
@@ -285,7 +279,7 @@ export default {
   text-transform: uppercase;
   font-family: mainFont;
 }
-.meetings-info-tr {
+.projects-info-tr {
   width: 100%;
 }
 .td-btn {
@@ -317,19 +311,16 @@ export default {
   width: 17px;
   color: #424954;
 }
-.table-description {
-  width: 60%;
+.table-task {
+  width: 55%;
 }
-.table-date {
-  width: 10%;
+.table-deadline {
+  width: 20%;
 }
-.table-time {
-  width: 8%;
+.table-link {
+  width: 25%;
 }
-.table-actions {
-  width: 5%;
-}
-.meetings-info-calendar {
+.projects-info-calendar {
   position: fixed;
   display: inline-block;
   top: 50%;

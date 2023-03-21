@@ -177,7 +177,8 @@ export default defineComponent({
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   cursor: pointer;
   margin-top: 5px;
-  margin-left: 61%;
+  margin-left: 20px;
+  margin-right: 25px;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -216,5 +217,6 @@ export default defineComponent({
 .meetingsEdit-flex {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 </style>
