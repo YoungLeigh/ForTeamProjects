@@ -140,7 +140,6 @@ export default {
               id: doc.id,
               description: doc.data().description,
               date: doc.data().date,
-              time: doc.data().time,
               timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
@@ -306,7 +305,7 @@ export default {
   color: #424954;
 }
 .table-description {
-  width: 60%;
+  width: 40%;
 }
 .table-date {
   width: 10%;

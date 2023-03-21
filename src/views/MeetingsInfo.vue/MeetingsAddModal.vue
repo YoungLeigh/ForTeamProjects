@@ -12,19 +12,19 @@
         <tr class="team-info-tr">
           <td class="table-description meetings-info-td">
             <input
-              @keyup.enter.prevent="addNewMember"
+              @keyup.enter.prevent="addNewMeeting"
               @keyup.escape.prevent="closeAddBtn"
               class="team-add-input"
               type="text"
               name="newName"
               placeholder="Meetings Info"
-              v-model="memberName"
+              v-model="meetingsDescription"
             />
           </td>
 
           <td class="table-date meetings-info-td">
             <div class="table-date-row">
-              <div class="meetings-add-date">{{ date }} {{ time }}</div>
+              <div class="meetings-add-date">{{ dateTimeData }}</div>
               <VDatePicker v-model="dateTime" mode="dateTime">
                 <template #default="{ togglePopover }">
                   <button
@@ -43,7 +43,7 @@
 
           <td class="td-btn table-actions meetings-info-td">
             <button
-              @click="addNewMember"
+              @click="addNewMeeting"
               class="team-close-btn1 btn--full2 edit-btn"
             >
               <font-awesome-icon class="team-icon3" icon="fa-solid fa-check" />
@@ -75,44 +75,42 @@ export default {
 
     const date = ref(dateTime.value.toLocaleString("en-US", dateOptions));
     const time = ref(dateTime.value.toLocaleString("en-US", timeOptions));
-
+    const dateTimeData = ref(date.value + " " + time.value);
     // const date = ref(new Date());
-    const memberName = ref("");
-    const memberEmail = ref("");
-    const memberContacts = ref("");
+    const meetingsDescription = ref("");
+    const meetingsDate = ref("");
 
     // const store = useStore();
     const closeAddBtn = () => {
       context.emit("closeAddBtn");
     };
 
-    const addNewMember = async () => {
-      await addDoc(collection(db, "TeamInfo"), {
-        name: memberName.value,
-        email: memberEmail.value,
-        contacts: memberContacts.value,
+    const addNewMeeting = async () => {
+      await addDoc(collection(db, "MeetingsInfo"), {
+        description: meetingsDescription.value,
+        date: dateTimeData.value,
         timestamp: serverTimestamp(), // add timestamp field
       });
-      memberName.value = "";
-      memberEmail.value = "";
-      memberContacts.value = "";
+      meetingsDescription.value = "";
+      meetingsDate.value = "";
     };
 
     watch(dateTime, (newValue) => {
       //watching the changes in data (selecting the date in calendar) and applying change
       date.value = newValue.toLocaleString("en-US", dateOptions);
       time.value = newValue.toLocaleString("en-US", timeOptions);
+      dateTimeData.value = date.value + " " + time.value;
     });
 
     return {
       date,
       dateTime,
+      dateTimeData,
       time,
-      memberName,
-      memberEmail,
-      memberContacts,
+      meetingsDescription,
+      meetingsDate,
       closeAddBtn,
-      addNewMember,
+      addNewMeeting,
     };
   },
 };
