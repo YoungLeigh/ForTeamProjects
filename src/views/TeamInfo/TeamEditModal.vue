@@ -1,7 +1,7 @@
 <template>
   <div class="teamEditModal">
     <div class="teamEdit-container">
-      <h3 class="teamEdit-header">Edit information</h3>
+      <h3 class="teamEdit-header">Edit Members info</h3>
       <hr class="teamEdit-underline" />
       <div class="teamEdit-modal-content">
         <div class="teamEdit-input">

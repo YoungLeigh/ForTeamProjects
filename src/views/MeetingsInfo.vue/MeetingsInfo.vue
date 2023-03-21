@@ -24,6 +24,11 @@
             <td class="table-date meetings-info-td">{{ info.date }}</td>
 
             <td class="td-btn meetings-info-td">
+              <MeetingsEditModal
+                v-if="showEditInfo"
+                @closeEditModal="closeEditModal"
+                :selectedInfo="selectedInfo"
+              ></MeetingsEditModal>
               <button
                 type="button"
                 class="team-close-btn btn--full2 edit-btn"
@@ -64,7 +69,6 @@
         </button>
       </div>
     </div>
-    <div></div>
   </section>
 </template>
 
@@ -73,11 +77,12 @@ import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 import MeetingsAddModal from "./MeetingsAddModal.vue";
+import MeetingsEditModal from "./MeetingsEditModal.vue";
 
 export default {
   name: "MeetingsInfo",
   props: {},
-  components: { MeetingsAddModal },
+  components: { MeetingsAddModal, MeetingsEditModal },
   setup() {
     const selectedDate = ref({
       month: "",
@@ -112,7 +117,7 @@ export default {
       // Set the selectedInfo ref to the selected document
       selectedInfo.value = info;
       showEditInfo.value = true;
-      console.log(selectedInfo.value.name);
+      console.log(selectedInfo.value.description);
     };
     const closeEditModal = () => {
       // Reset the selected document and hide the editor
