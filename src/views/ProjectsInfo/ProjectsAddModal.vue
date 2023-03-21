@@ -30,7 +30,7 @@
           />
         </div>
         <div class="projectsAdd-input">
-          <label class="projectsAdd-label">Links:</label>
+          <label class="projectsAdd-label">Link:</label>
           <input
             @keyup.enter.prevent="saveChanges"
             class="projectsAdd-input-field"
@@ -51,12 +51,12 @@
               </button>
             </template>
           </VDatePicker>
-          <button @click="saveChanges" class="edit-submit-btn" type="submit">
+          <button @click="addNewTask" class="edit-submit-btn" type="submit">
             Save
           </button>
         </div>
 
-        <button @click="closeEditModal" id="projectsAdd-close-btn">
+        <button @click="closeAddModal" id="projectsAdd-close-btn">
           <font-awesome-icon icon="fa-solid fa-xmark" />
         </button>
       </div>
@@ -66,15 +66,14 @@
 
 <script>
 import { ref, watch } from "vue";
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
 export default {
   name: "projectsAddModal",
-  setup() {
+  setup(props, { emit }) {
     const task = ref(""); //declaring variables from selectedInfo
     const information = ref("");
-
     const link = ref("");
 
     const dateTime = ref(new Date());
@@ -82,19 +81,32 @@ export default {
 
     const deadline = ref(dateTime.value.toLocaleString("en-US", dateOptions));
 
+    const addNewTask = async () => {
+      await addDoc(collection(db, "ProjectsInfo"), {
+        task: task.value,
+        information: information.value,
+        deadline: deadline.value,
+        link: link.value,
+        timestamp: serverTimestamp(), // add timestamp field
+      });
+      task.value = "";
+      information.value = "";
+      link.value = "";
+      deadline.value = "";
+      // emit("closeAddModal");
+    };
+
     watch(dateTime, (newValue) => {
       //watching the changes in data (selecting the date in calendar) and applying change
-      newDate.value = newValue.toLocaleString("en-US", dateOptions);
-      time.value = newValue.toLocaleString("en-US", timeOptions);
-      dateTimeData.value = newDate.value + " " + time.value;
-      date.value = dateTimeData.value;
+      dateTime.value = newValue.toLocaleString("en-US", dateOptions);
+      deadline.value = dateTime.value;
     });
 
-    return { task, information, deadline, link, dateTime };
+    return { task, information, deadline, link, dateTime, addNewTask };
   },
   methods: {
-    closeEditModal() {
-      this.$emit("closeEditModal");
+    closeAddModal() {
+      this.$emit("closeAddModal");
     },
   },
 };

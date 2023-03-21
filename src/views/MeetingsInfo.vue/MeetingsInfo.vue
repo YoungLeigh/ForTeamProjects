@@ -84,13 +84,6 @@ export default {
   props: {},
   components: { MeetingsAddModal, MeetingsEditModal },
   setup() {
-    const selectedDate = ref({
-      month: "",
-      day: "",
-      year: "",
-      time: "",
-    });
-
     let showCalendar = ref(false); // showing calendar
     const calendarColor = ref("teal");
 

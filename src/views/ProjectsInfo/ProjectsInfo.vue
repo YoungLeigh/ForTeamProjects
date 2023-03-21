@@ -31,7 +31,7 @@
       <div>
         <ProjectsAddModal
           v-if="addModal"
-          @closeAddBtn="handleAddModal"
+          @closeAddModal="handleAddModal"
         ></ProjectsAddModal>
         <button
           v-if="addTeambtn"
