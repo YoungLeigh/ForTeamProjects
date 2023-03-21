@@ -2,66 +2,37 @@
   <section class="projects-info">
     <div class="projects-info-content">
       <div class="projects-info-title">
-        <p class="title">Projects</p>
+        <p class="title">Tasks</p>
       </div>
 
       <table class="projectsinfo-table">
         <thead>
           <th class="table-task projects-info-th">Task</th>
 
+          <th class="table-info projects-info-th">Information</th>
           <th class="table-deadline projects-info-th">Deadline</th>
-          <th class="table-link projects-info-th">Links</th>
           <th class="table-actions projects-info-th"></th>
         </thead>
-        <tbody v-for="info in meetingsinfo" :key="info.id" :id="info.id">
+        <tbody v-for="info in projectsinfo" :key="info.id" :id="info.id">
           <tr>
             <td style="display: none">{{ info.id }}</td>
 
             <td class="table-task projects-info-td">
-              {{ info.description }}
+              {{ info.task }}
             </td>
-            <td class="table-deadline projects-info-td">
-              {{ info.date }}
+            <td class="table-info projects-info-td">
+              {{ info.information }}
             </td>
 
-            <td class="table-link projects-info-td">{{ info.date }}</td>
-
-            <td class="td-btn projects-info-td">
-              <div class="projects-info-calendar">
-                <VDatePicker
-                  v-if="showCalendar"
-                  v-model="date"
-                  mode="dateTime"
-                  :color="calendarColor"
-                  is24hr
-                />
-              </div>
-              <button
-                type="button"
-                class="team-close-btn btn--full2 edit-btn"
-                @click="selectDocument(info)"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-pen-to-square"
-                  class="team-icon"
-                />
-              </button>
-
-              <button
-                @click="deleteUserData(info.id)"
-                type="button"
-                class="team-close-btn"
-              >
-                <font-awesome-icon
-                  icon="fa-solid fa-trash"
-                  class="team-icon1"
-                />
-              </button>
-            </td>
+            <td class="table-deadline projects-info-td">{{ info.deadline }}</td>
           </tr>
         </tbody>
       </table>
       <div>
+        <ProjectsAddModal
+          v-if="addModal"
+          @closeAddBtn="handleAddModal"
+        ></ProjectsAddModal>
         <button
           v-if="addTeambtn"
           @click="handleAddModal"
@@ -79,11 +50,12 @@
 import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
+import ProjectsAddModal from "./ProjectsAddModal.vue";
 
 export default {
   name: "projectsinfo",
   props: {},
-  components: {},
+  components: { ProjectsAddModal },
   setup() {
     const selectedDate = ref({
       month: "",
@@ -98,7 +70,7 @@ export default {
     let addModal = ref(false); //team adding modal
     let editModal = ref(false); //team editing modal
     let addTeambtn = ref(true); //team adding button
-    const meetingsinfo = ref([]);
+    const projectsinfo = ref([]);
     const handleAddModal = () => {
       //toggle team add Modal
       addModal.value = !addModal.value;
@@ -127,7 +99,7 @@ export default {
     };
 
     const deleteUserData = async (id) => {
-      await deleteDoc(doc(db, "MeetingsInfo", id)); //deleting target document in the database
+      await deleteDoc(doc(db, "ProjectsInfo", id)); //deleting target document in the database
     };
     // const handleEditModal = function () {
     //   editModal.value = !editModal.value;
@@ -136,7 +108,7 @@ export default {
     onMounted(async () => {
       //gets data from firestore in real-time using onSnapshot
       onSnapshot(
-        collection(db, "MeetingsInfo"), //query to call the database value
+        collection(db, "ProjectsInfo"), //query to call the database value
         (querySnapshot) => {
           const userCollection = [];
           querySnapshot.forEach((doc) => {
@@ -144,15 +116,15 @@ export default {
             const userData = {
               //variable to save each data in the field
               id: doc.id,
-              description: doc.data().description,
-              date: doc.data().date,
-              time: doc.data().time,
+              task: doc.data().task,
+              information: doc.data().information,
+              deadline: doc.data().deadline,
               timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
           });
           userCollection.sort((a, b) => a.timestamp - b.timestamp); // Sort userCollection array by timestamp field
-          meetingsinfo.value = userCollection; //all the data is then saved in the meetingsinfo variable.
+          projectsinfo.value = userCollection; //all the data is then saved in the meetingsinfo variable.
         }
       );
     });
@@ -161,7 +133,7 @@ export default {
       showCalendar,
       calendarColor,
       handleShowCalendar,
-      meetingsinfo,
+      projectsinfo,
       addModal,
       addTeambtn,
       editModal,
@@ -270,6 +242,10 @@ export default {
   font-size: 15px;
   height: 30px;
   border-radius: 7px;
+  white-space: nowrap; /* Prevents text from wrapping to a new line */
+  overflow: hidden; /* Hides any overflow text */
+  text-overflow: ellipsis; /* Adds an ellipsis to the end of the text */
+  max-width: 100px; /* Sets a maximum width for the table cell */
 }
 .projects-info-th {
   padding: 10px 0px;
@@ -312,13 +288,13 @@ export default {
   color: #424954;
 }
 .table-task {
-  width: 55%;
+  width: 30%;
+}
+.table-info {
+  width: 50%;
 }
 .table-deadline {
   width: 20%;
-}
-.table-link {
-  width: 25%;
 }
 .projects-info-calendar {
   position: fixed;
