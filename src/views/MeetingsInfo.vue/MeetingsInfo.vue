@@ -145,6 +145,7 @@ export default {
             userCollection.push(userData);
           });
           userCollection.sort((a, b) => a.timestamp - b.timestamp); // Sort userCollection array by timestamp field
+
           meetingsinfo.value = userCollection; //all the data is then saved in the meetingsinfo variable.
         }
       );
@@ -305,15 +306,12 @@ export default {
   color: #424954;
 }
 .table-description {
-  width: 40%;
+  width: 70%;
 }
 .table-date {
-  width: 10%;
-}
-.table-time {
-  width: 8%;
+  width: 20%;
 }
 .table-actions {
-  width: 5%;
+  width: 10%;
 }
 </style>
