@@ -10,7 +10,6 @@
           <th class="table-task projects-info-th">Task</th>
           <th class="table-info projects-info-th">Information</th>
           <th class="table-deadline projects-info-th">Deadline</th>
-          <th class="table-actions projects-info-th"></th>
         </thead>
         <tbody v-for="info in projectsinfo" :key="info.id" :id="info.id">
           <tr class="projectsinfo-tr" @click="selectDocument(info)">
@@ -192,6 +191,11 @@ export default {
 
 .projectsinfo-tr {
   cursor: pointer;
+}
+.projectsinfo-tr:hover {
+  border: 10px solid rgb(158, 252, 172);
+  box-shadow: 0px 0px 7px rgb(36, 90, 45);
+  border-radius: 5px;
 }
 
 /*Input contents for projects-info*/

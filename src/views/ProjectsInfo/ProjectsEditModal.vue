@@ -22,9 +22,8 @@
         <div class="projectsEdit-input">
           <label class="projectsEdit-label">Information:</label>
           <textarea
-            @keyup.enter.prevent="saveChanges"
             type="textarea"
-            class="projectsEdit-input-field"
+            class="projectsEdit-textarea-field"
             v-model="information"
             :readonly="!isEditable"
           />
@@ -41,7 +40,6 @@
         <div class="projectsEdit-input">
           <label class="projectsEdit-label">Link:</label>
           <textarea
-            @keyup.enter.prevent="saveChanges"
             type="text"
             class="projectsEdit-input-field"
             v-model="link"
@@ -211,6 +209,16 @@ export default defineComponent({
   background-color: none;
   border: 1.7px solid #424954c7;
 }
+.projectsEdit-textarea-field {
+  width: 90%;
+  height: 70px;
+  border-radius: 5px;
+  border-style: none;
+  font-family: mainFont, korFont;
+  font-size: 13px;
+  background-color: none;
+  border: 1.7px solid #424954c7;
+}
 .edit-submit-btn {
   border-style: none;
   height: 33px;
@@ -226,6 +234,10 @@ export default defineComponent({
   padding-left: 15px;
   padding-right: 15px;
 }
+.edit-submit-btn:active {
+  background-color: rgb(0, 88, 113);
+  box-shadow: inset 0px 0px 5px #888;
+}
 .edit-edit-btn {
   border-style: none;
   height: 33px;
@@ -240,6 +252,10 @@ export default defineComponent({
   margin-left: 5px;
   padding-left: 15px;
   padding-right: 15px;
+}
+.edit-edit-btn:active {
+  background-color: rgb(0, 88, 113);
+  box-shadow: inset 0px 0px 5px #888;
 }
 .edit-delete-btn {
   border-style: none;

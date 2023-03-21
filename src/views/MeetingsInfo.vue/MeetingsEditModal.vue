@@ -182,6 +182,10 @@ export default defineComponent({
   padding-left: 15px;
   padding-right: 15px;
 }
+.edit-submit-btn:active {
+  background-color: rgb(0, 88, 113);
+  box-shadow: inset 0px 0px 5px #888;
+}
 #meetingsEdit-close-btn {
   background-color: transparent;
   border: none;
