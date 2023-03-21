@@ -1,7 +1,12 @@
 <template>
   <div class="projectsEditModal">
     <div class="projectsEdit-container">
-      <h3 class="projectsEdit-header">Task Info</h3>
+      <div class="projectsEdit-header-container">
+        <h3 class="projectsEdit-header">Task Info</h3>
+        <button @click="deleteUserData" class="edit-delete-btn" type="submit">
+          Delete
+        </button>
+      </div>
       <hr class="projectsEdit-underline" />
       <div class="projectsEdit-modal-content">
         <div class="projectsEdit-input">
@@ -44,7 +49,7 @@
           />
         </div>
         <div class="projectsEdit-flex">
-          <VDatePicker v-model="dateTime" mode="dateTime">
+          <VDatePicker v-model="dateTime">
             <template #default="{ togglePopover }">
               <button
                 class="team-close-btn1 btn--full2 edit-btn"
@@ -75,7 +80,7 @@
 
 <script>
 import { ref, defineComponent, watch } from "vue";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
 export default defineComponent({
@@ -88,20 +93,18 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const task = ref(props.selectedInfo.task); //declaring variables from selectedInfo
+    const task = ref(props.selectedInfo.task);
     const information = ref(props.selectedInfo.information);
-    const deadline = ref(props.selectedInfo.deadline); //declaring variables from selectedInfo
+    const deadline = ref(props.selectedInfo.deadline);
     const link = ref(props.selectedInfo.link);
 
     const isEditable = ref(false);
 
     const dateTime = ref(new Date());
     const dateOptions = { month: "short", day: "2-digit", year: "numeric" }; //changing the date form to custom form
-    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
 
     const newDate = ref(dateTime.value.toLocaleString("en-US", dateOptions));
-    const time = ref(dateTime.value.toLocaleString("en-US", timeOptions));
-    const dateTimeData = ref(newDate.value + " " + time.value);
+    const dateTimeData = ref(newDate.value);
 
     const toggleEdit = function () {
       isEditable.value = !isEditable.value;
@@ -109,19 +112,23 @@ export default defineComponent({
     const saveChanges = async () => {
       const documentRef = doc(db, "ProjectsInfo", props.selectedInfo.id);
       const updatedDocument = {
-        description: description.value,
-        date: date.value,
+        task: task.value,
+        information: information.value,
+        deadline: deadline.value,
+        link: link.value,
       };
       await updateDoc(documentRef, updatedDocument);
       // Emit an event to the parent component to indicate that the document has been saved
       emit("closeEditModal");
     };
+    const deleteUserData = async () => {
+      await deleteDoc(doc(db, "ProjectsInfo", props.selectedInfo.id)); //deleting target document in the database
+      emit("closeEditModal");
+    };
     watch(dateTime, (newValue) => {
       //watching the changes in data (selecting the date in calendar) and applying change
       newDate.value = newValue.toLocaleString("en-US", dateOptions);
-      time.value = newValue.toLocaleString("en-US", timeOptions);
-      dateTimeData.value = newDate.value + " " + time.value;
-      date.value = dateTimeData.value;
+      deadline.value = newDate.value;
     });
 
     return {
@@ -130,9 +137,10 @@ export default defineComponent({
       deadline,
       link,
       saveChanges,
+      deleteUserData,
+      toggleEdit,
       dateTime,
       isEditable,
-      toggleEdit,
     };
   },
   methods: {
@@ -159,7 +167,7 @@ export default defineComponent({
   text-decoration: none;
   color: #424954;
   white-space: nowrap;
-  margin-top: 15px;
+  margin-top: 0;
   margin-bottom: 0px;
 }
 .projectsEdit-underline {
@@ -233,6 +241,20 @@ export default defineComponent({
   padding-left: 15px;
   padding-right: 15px;
 }
+.edit-delete-btn {
+  border-style: none;
+  height: 25px;
+  background-color: #be0020;
+  border-radius: 5px;
+  font-family: mainFont, korFont;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: rgba(165, 149, 154, 0.2) 0px 8px 24px;
+  cursor: pointer;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 #projectsEdit-close-btn {
   background-color: transparent;
   border: none;
@@ -268,5 +290,11 @@ export default defineComponent({
 .projectsEdit-flex {
   display: flex;
   flex-direction: row;
+}
+.projectsEdit-header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 13px;
 }
 </style>
