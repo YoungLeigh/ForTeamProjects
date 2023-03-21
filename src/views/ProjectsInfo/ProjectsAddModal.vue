@@ -1,28 +1,44 @@
 <template>
   <div class="projectsAddModal">
     <div class="projectsAdd-container">
-      <h3 class="projectsAdd-header">Add New Project</h3>
+      <h3 class="projectsAdd-header">Add New Task</h3>
       <hr class="projectsAdd-underline" />
       <div class="projectsAdd-modal-content">
         <div class="projectsAdd-input">
-          <label class="projectsAdd-label">Information:</label>
+          <label class="projectsAdd-label">Task:</label>
           <input
             @keyup.enter.prevent="saveChanges"
             type="text"
             class="projectsAdd-input-field"
-            v-model="description"
+            v-model="task"
           />
         </div>
         <div class="projectsAdd-input">
-          <label class="projectsAdd-label">Date:</label>
+          <label class="projectsAdd-label">Information:</label>
           <input
             @keyup.enter.prevent="saveChanges"
             class="projectsAdd-input-field"
-            v-model="date"
+            v-model="information"
+          />
+        </div>
+        <div class="projectsAdd-input">
+          <label class="projectsAdd-label">Deadline:</label>
+          <input
+            @keyup.enter.prevent="saveChanges"
+            class="projectsAdd-input-field"
+            v-model="deadline"
+          />
+        </div>
+        <div class="projectsAdd-input">
+          <label class="projectsAdd-label">Links:</label>
+          <input
+            @keyup.enter.prevent="saveChanges"
+            class="projectsAdd-input-field"
+            v-model="link"
           />
         </div>
         <div class="projectsAdd-flex">
-          <VDatePicker v-model="dateTime" mode="dateTime">
+          <VDatePicker v-model="dateTime">
             <template #default="{ togglePopover }">
               <button
                 class="team-close-btn1 btn--full2 edit-btn"
@@ -49,41 +65,23 @@
 </template>
 
 <script>
-import { ref, defineComponent, watch } from "vue";
+import { ref, watch } from "vue";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
-export default defineComponent({
+export default {
   name: "projectsAddModal",
-  props: {
-    //receiving selectedInfo as props
-    selectedInfo: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const description = ref(props.selectedInfo.description); //declaring variables from selectedInfo
-    const date = ref(props.selectedInfo.date);
+  setup() {
+    const task = ref(""); //declaring variables from selectedInfo
+    const information = ref("");
+
+    const link = ref("");
 
     const dateTime = ref(new Date());
     const dateOptions = { month: "short", day: "2-digit", year: "numeric" }; //changing the date form to custom form
-    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
 
-    const newDate = ref(dateTime.value.toLocaleString("en-US", dateOptions));
-    const time = ref(dateTime.value.toLocaleString("en-US", timeOptions));
-    const dateTimeData = ref(newDate.value + " " + time.value);
+    const deadline = ref(dateTime.value.toLocaleString("en-US", dateOptions));
 
-    const saveChanges = async () => {
-      const documentRef = doc(db, "ProjectsInfo", props.selectedInfo.id);
-      const updatedDocument = {
-        description: description.value,
-        date: date.value,
-      };
-      await updateDoc(documentRef, updatedDocument);
-      // Emit an event to the parent component to indicate that the document has been saved
-      emit("closeEditModal");
-    };
     watch(dateTime, (newValue) => {
       //watching the changes in data (selecting the date in calendar) and applying change
       newDate.value = newValue.toLocaleString("en-US", dateOptions);
@@ -92,14 +90,14 @@ export default defineComponent({
       date.value = dateTimeData.value;
     });
 
-    return { saveChanges, description, date, dateTime };
+    return { task, information, deadline, link, dateTime };
   },
   methods: {
     closeEditModal() {
       this.$emit("closeEditModal");
     },
   },
-});
+};
 </script>
 <style scoped>
 .projectsAddModal {
