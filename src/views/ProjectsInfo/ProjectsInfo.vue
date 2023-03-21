@@ -8,13 +8,12 @@
       <table class="projectsinfo-table">
         <thead>
           <th class="table-task projects-info-th">Task</th>
-
           <th class="table-info projects-info-th">Information</th>
           <th class="table-deadline projects-info-th">Deadline</th>
           <th class="table-actions projects-info-th"></th>
         </thead>
         <tbody v-for="info in projectsinfo" :key="info.id" :id="info.id">
-          <tr>
+          <tr class="projectsinfo-tr" @click="selectDocument(info)">
             <td style="display: none">{{ info.id }}</td>
 
             <td class="table-task projects-info-td">
@@ -24,7 +23,17 @@
               {{ info.information }}
             </td>
 
-            <td class="table-deadline projects-info-td">{{ info.deadline }}</td>
+            <td class="table-deadline projects-info-td">
+              <ProjectsEditModal
+                v-if="showEditInfo"
+                @closeEditModal="closeEditModal"
+                :selectedInfo="selectedInfo"
+              ></ProjectsEditModal>
+              {{ info.deadline }}
+            </td>
+            <td style="display: none">
+              {{ info.link }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -51,19 +60,13 @@ import { doc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import { ref, onMounted } from "vue";
 import { db } from "@/firebase/config";
 import ProjectsAddModal from "./ProjectsAddModal.vue";
+import ProjectsEditModal from "./ProjectsEditModal.vue";
 
 export default {
   name: "projectsinfo",
   props: {},
-  components: { ProjectsAddModal },
+  components: { ProjectsAddModal, ProjectsEditModal },
   setup() {
-    const selectedDate = ref({
-      month: "",
-      day: "",
-      year: "",
-      time: "",
-    });
-
     let showCalendar = ref(false); // showing calendar
     const calendarColor = ref("teal");
 
@@ -80,9 +83,6 @@ export default {
     const selectedInfo = ref(null);
     const documents = ref([]);
 
-    const handleShowCalendar = () => {
-      showCalendar.value = !showCalendar.value; //toggles showing calendar
-    };
     const selectDocument = async (info) => {
       if (!info) {
         return;
@@ -90,12 +90,12 @@ export default {
       // Set the selectedInfo ref to the selected document
       selectedInfo.value = info;
       showEditInfo.value = true;
-      console.log(selectedInfo.value.name);
     };
     const closeEditModal = () => {
       // Reset the selected document and hide the editor
-      selectedInfo.value = null;
+      console.log("ok");
       showEditInfo.value = false;
+      selectedInfo.value = "";
     };
 
     const deleteUserData = async (id) => {
@@ -119,6 +119,7 @@ export default {
               task: doc.data().task,
               information: doc.data().information,
               deadline: doc.data().deadline,
+              link: doc.data().link,
               timestamp: doc.data().timestamp, // add timestamp field to userData object
             };
             userCollection.push(userData);
@@ -132,7 +133,6 @@ export default {
     return {
       showCalendar,
       calendarColor,
-      handleShowCalendar,
       projectsinfo,
       addModal,
       addTeambtn,
@@ -188,6 +188,10 @@ export default {
   height: 30px;
   width: 60px;
   color: white;
+}
+
+.projectsinfo-tr {
+  cursor: pointer;
 }
 
 /*Input contents for projects-info*/

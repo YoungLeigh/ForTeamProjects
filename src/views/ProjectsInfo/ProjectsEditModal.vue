@@ -1,24 +1,42 @@
 <template>
   <div class="projectsEditModal">
     <div class="projectsEdit-container">
-      <h3 class="projectsEdit-header">Add New Project</h3>
+      <h3 class="projectsEdit-header">Task Info</h3>
       <hr class="projectsEdit-underline" />
       <div class="projectsEdit-modal-content">
+        <div class="projectsEdit-input">
+          <label class="projectsEdit-label">Task:</label>
+          <input
+            @keyup.enter.prevent="saveChanges"
+            type="text"
+            class="projectsEdit-input-field"
+            v-model="task"
+          />
+        </div>
         <div class="projectsEdit-input">
           <label class="projectsEdit-label">Information:</label>
           <input
             @keyup.enter.prevent="saveChanges"
             type="text"
             class="projectsEdit-input-field"
-            v-model="description"
+            v-model="information"
           />
         </div>
         <div class="projectsEdit-input">
-          <label class="projectsEdit-label">Date:</label>
+          <label class="projectsEdit-label">Deadline:</label>
           <input
             @keyup.enter.prevent="saveChanges"
             class="projectsEdit-input-field"
-            v-model="date"
+            v-model="deadline"
+          />
+        </div>
+        <div class="projectsEdit-input">
+          <label class="projectsEdit-label">Link:</label>
+          <input
+            @keyup.enter.prevent="saveChanges"
+            type="text"
+            class="projectsEdit-input-field"
+            v-model="link"
           />
         </div>
         <div class="projectsEdit-flex">
@@ -63,8 +81,10 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const description = ref(props.selectedInfo.description); //declaring variables from selectedInfo
-    const date = ref(props.selectedInfo.date);
+    const task = ref(props.selectedInfo.task); //declaring variables from selectedInfo
+    const information = ref(props.selectedInfo.information);
+    const deadline = ref(props.selectedInfo.deadline); //declaring variables from selectedInfo
+    const link = ref(props.selectedInfo.link);
 
     const dateTime = ref(new Date());
     const dateOptions = { month: "short", day: "2-digit", year: "numeric" }; //changing the date form to custom form
@@ -92,7 +112,7 @@ export default defineComponent({
       date.value = dateTimeData.value;
     });
 
-    return { saveChanges, description, date, dateTime };
+    return { task, information, deadline, link, saveChanges, dateTime };
   },
   methods: {
     closeEditModal() {

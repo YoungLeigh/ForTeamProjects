@@ -100,9 +100,6 @@ export default {
     const selectedInfo = ref(null);
     const documents = ref([]);
 
-    const handleShowCalendar = () => {
-      showCalendar.value = !showCalendar.value; //toggles showing calendar
-    };
     const selectDocument = async (info) => {
       if (!info) {
         return;
@@ -152,7 +149,6 @@ export default {
     return {
       showCalendar,
       calendarColor,
-      handleShowCalendar,
       meetingsinfo,
       addModal,
       addTeambtn,
