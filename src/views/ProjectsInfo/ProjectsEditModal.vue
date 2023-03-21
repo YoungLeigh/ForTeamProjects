@@ -11,15 +11,17 @@
             type="text"
             class="projectsEdit-input-field"
             v-model="task"
+            :readonly="!isEditable"
           />
         </div>
         <div class="projectsEdit-input">
           <label class="projectsEdit-label">Information:</label>
-          <input
+          <textarea
             @keyup.enter.prevent="saveChanges"
-            type="text"
+            type="textarea"
             class="projectsEdit-input-field"
             v-model="information"
+            :readonly="!isEditable"
           />
         </div>
         <div class="projectsEdit-input">
@@ -28,15 +30,17 @@
             @keyup.enter.prevent="saveChanges"
             class="projectsEdit-input-field"
             v-model="deadline"
+            :readonly="!isEditable"
           />
         </div>
         <div class="projectsEdit-input">
           <label class="projectsEdit-label">Link:</label>
-          <input
+          <textarea
             @keyup.enter.prevent="saveChanges"
             type="text"
             class="projectsEdit-input-field"
             v-model="link"
+            :readonly="!isEditable"
           />
         </div>
         <div class="projectsEdit-flex">
@@ -53,6 +57,9 @@
               </button>
             </template>
           </VDatePicker>
+          <button @click="toggleEdit" class="edit-edit-btn" type="submit">
+            Edit
+          </button>
           <button @click="saveChanges" class="edit-submit-btn" type="submit">
             Save
           </button>
@@ -86,6 +93,8 @@ export default defineComponent({
     const deadline = ref(props.selectedInfo.deadline); //declaring variables from selectedInfo
     const link = ref(props.selectedInfo.link);
 
+    const isEditable = ref(false);
+
     const dateTime = ref(new Date());
     const dateOptions = { month: "short", day: "2-digit", year: "numeric" }; //changing the date form to custom form
     const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
@@ -94,6 +103,9 @@ export default defineComponent({
     const time = ref(dateTime.value.toLocaleString("en-US", timeOptions));
     const dateTimeData = ref(newDate.value + " " + time.value);
 
+    const toggleEdit = function () {
+      isEditable.value = !isEditable.value;
+    };
     const saveChanges = async () => {
       const documentRef = doc(db, "ProjectsInfo", props.selectedInfo.id);
       const updatedDocument = {
@@ -112,7 +124,16 @@ export default defineComponent({
       date.value = dateTimeData.value;
     });
 
-    return { task, information, deadline, link, saveChanges, dateTime };
+    return {
+      task,
+      information,
+      deadline,
+      link,
+      saveChanges,
+      dateTime,
+      isEditable,
+      toggleEdit,
+    };
   },
   methods: {
     closeEditModal() {
@@ -129,7 +150,7 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 340px;
+  width: 500px;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -172,17 +193,13 @@ export default defineComponent({
 .projectsEdit-input {
   margin-bottom: 7px;
 }
-
-.form-group {
-  margin-bottom: 1rem;
-}
 .projectsEdit-input-field {
   width: 90%;
   height: 30px;
   border-radius: 5px;
   border-style: none;
   font-family: mainFont, korFont;
-  font-size: 16px;
+  font-size: 13px;
   background-color: none;
   border: 1.7px solid #424954c7;
 }
@@ -197,8 +214,22 @@ export default defineComponent({
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   cursor: pointer;
   margin-top: 5px;
-  margin-left: 20px;
-  margin-right: 25px;
+  margin-left: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.edit-edit-btn {
+  border-style: none;
+  height: 33px;
+  background-color: #424954;
+  border-radius: 5px;
+  font-family: mainFont, korFont;
+  font-size: 16px;
+  color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -237,6 +268,5 @@ export default defineComponent({
 .projectsEdit-flex {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 </style>
