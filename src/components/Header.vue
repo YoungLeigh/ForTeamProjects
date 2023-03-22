@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <a href="#" class="logo">Team Project</a>
+    <a href="#" class="logo">ForTeamProject</a>
     <div class="header-btn-list">
       <button class="btn1 btn--full btn--outline" type="button">
         Settings

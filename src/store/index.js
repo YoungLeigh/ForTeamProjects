@@ -17,13 +17,19 @@ import { auth } from "../firebase/config.js";
 const store = createStore({
   state: {
     user: null,
+    data: null,
     authIsReady: false,
-    teaminfo: [],
+    teamInfo: [],
+    meetingsInfo: [],
+    projectsInfo: [],
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
       console.log("user state changed:", state.user);
+    },
+    setData(state, data) {
+      state.data = data;
     },
     setError(state, error) {
       state.error = error;
@@ -33,6 +39,15 @@ const store = createStore({
     },
     saveNewMember(state, payload) {
       state.teaminfo = payload;
+    },
+    setTeamInfo(state, teamInfo) {
+      state.teamInfo = teamInfo;
+    },
+    setMeetingsInfo(state, meetingsInfo) {
+      state.meetingsInfo = meetingsInfo;
+    },
+    setProjectsInfo(state, projectsInfo) {
+      state.projectsInfo = projectsInfo;
     },
   },
 
@@ -93,6 +108,24 @@ const store = createStore({
       context.dispatch("fetchNewMemberData");
       // commit("saveNewMember", payload);
     }, //adding new member to the database
+    async fetchData({ commit, state }) {
+      if (!state.user) return;
+
+      const cachedData = localStorage.getItem(`data-${state.user.uid}`);
+      if (cachedData) {
+        commit("setData", JSON.parse(cachedData));
+        return;
+      }
+
+      const doc = await db.collection("users").doc(state.user.uid).get();
+      if (doc.exists) {
+        const data = doc.data().data;
+        commit("setData", data);
+        localStorage.setItem(`data-${state.user.uid}`, JSON.stringify(data));
+      } else {
+        await db.collection("users").doc(state.user.uid).set({ data: [] });
+      }
+    },
   },
 });
 const unsubscribe = onAuthStateChanged(auth, (user) => {
