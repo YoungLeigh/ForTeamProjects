@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div v-if="authIsReady" class="main-content">
+    <div class="main-content">
       <Header></Header>
       <TeamInfo></TeamInfo>
       <MeetingsInfo></MeetingsInfo>
@@ -12,8 +12,9 @@
 <script>
 import TeamInfo from "./TeamInfo/TeamInfo.vue";
 import Header from "../components/Header.vue";
-import { computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import MeetingsInfo from "./MeetingsInfo.vue/MeetingsInfo.vue";
 import ProjectsInfo from "./ProjectsInfo/ProjectsInfo.vue";
 
@@ -26,9 +27,22 @@ export default {
     ProjectsInfo,
   },
   setup() {
+    const user = ref(null); //To check user state for navigation guard
     const store = useStore();
+    const router = useRouter();
+
+    watchEffect(() => {
+      user.value = store.state.user;
+      if (!user.value) {
+        router.push("/login"); //navigation guard that moves the user to the login page
+      }
+    });
+    if (!user.value) {
+      router.push("/login"); //navigation guard that moves the user to the login page
+    }
+
     return {
-      authIsReady: computed(() => store.state.authIsReady),
+      user,
     };
   },
 };

@@ -43,12 +43,12 @@
             </div>
           </div>
 
-          <div class="profile-btns">
+          <!-- <div class="profile-btns">
             <font-awesome-icon
               class="profile-icons"
               icon="fa-solid fa-file"
             />Projects
-          </div>
+          </div> -->
           <div class="profile-btns">
             <font-awesome-icon
               class="profile-icons share-icon"
