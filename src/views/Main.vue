@@ -40,6 +40,25 @@ export default {
     if (!user.value) {
       router.push("/login"); //navigation guard that moves the user to the login page
     }
+    // if the above way of nav guard doesnt work, use the following:
+
+    // router.beforeEach((to, from, next) => {
+    //   const requiresAuth = to.matched.some(
+    //     (record) => record.meta.requiresAuth
+    //   );
+    //   const isAuthenticated = store.state.user !== null;
+    //   if (requiresAuth && !isAuthenticated) {
+    //     // If the user is not authenticated and the route requires authentication,
+    //     // redirect to the login page
+    //     next("/login");
+    //   } else if (to.path === "/signup" || to.path === "/reset-password") {
+    //     // If the user is accessing the sign up or reset password page, allow access
+    //     next();
+    //   } else {
+    //     // Otherwise, continue with the navigation
+    //     next();
+    //   }
+    // });
 
     return {
       user,

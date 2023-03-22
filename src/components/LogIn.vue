@@ -15,6 +15,7 @@
         />
         <p class="input-sub">PASSWORD</p>
         <input
+          @keyup.enter.prevent="handleLoginWithEmail"
           class="login-input"
           type="password"
           required
